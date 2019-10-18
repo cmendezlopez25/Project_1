@@ -41,8 +41,9 @@ body, html {
 
 /*---------------------------------------------*/
 a {
-	font-family: Raleway-Regular;
-	font-size: 14px;
+  font-family: Raleway-Regular;
+  font-weight: bold;
+	font-size: 18px;
 	line-height: 1.7;
 	color: #666666;
 	margin: 0px;
@@ -50,15 +51,27 @@ a {
 	-webkit-transition: all 0.4s;
   -o-transition: all 0.4s;
   -moz-transition: all 0.4s;
+  border: solid black 2px;
+  border-radius: 5px;
 }
 
 a:focus {
 	outline: none !important;
 }
 
-a:hover {
+a.nav-link:hover {
 	text-decoration: none;
-  color: #57b846;
+  color: rgb(255, 255, 255);
+  border: solid white 2px;
+}
+
+h3:hover {
+  text-decoration: none;
+  color: rgb(255, 255, 255);
+}
+
+tbody > tr:hover {
+  cursor: pointer;
 }
 
 /*---------------------------------------------*/
@@ -160,6 +173,16 @@ iframe {
   line-height: 1.4;
 }
 
+.right {
+  margin-top: 2px;
+  margin-left: auto;
+  margin-right: 5px;
+
+}
+
+.mw-90 {
+  max-width: 90%;
+}
 
 /*//////////////////////////////////////////////////////////////////
 [ login ]*/
@@ -185,12 +208,37 @@ iframe {
   background-color: #ebebeb;
 }
 
+.no-padding {
+  padding: 0px;
+  margin-top: 5px;
+}
+
+.container-header {
+  width: 100%;  
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: left;
+  align-items: left;
+  margin: 0px;
+
+  background-color: black;
+}
+
 
 .wrap-login100 {
   width: 560px;
   background: #fff;
   border-radius: 10px;
   position: relative;
+}
+
+.area-header {
+  color:#666666;
+  padding:5px;
 }
 
 
@@ -402,7 +450,7 @@ iframe {
   padding: 0 20px;
   min-width: 150px;
   height: 55px;
-  background-color: #333333;
+  background-color: black;
   border-radius: 27px;
 
   -webkit-transition: all 0.4s;
@@ -496,4 +544,15 @@ iframe {
     padding-left: 15px;
     padding-right: 15px;
   }
+}
+
+a.page-link {
+  color: black;
+}
+a.page-link:hover {
+  color: #666666;
+}
+
+svg:hover {
+  color: white;
 }
