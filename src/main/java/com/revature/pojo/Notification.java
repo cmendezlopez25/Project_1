@@ -3,7 +3,7 @@ package com.revature.pojo;
 import java.time.temporal.Temporal;
 
 public class Notification {
-	enum NotificationStatus {
+	public enum NotificationStatus {
 		NEW, UNREAD, READ
 	};
 
