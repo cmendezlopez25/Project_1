@@ -1,0 +1,1 @@
+INSERT INTO "Users"(id, username, password, firstname, lastname, role) values(1, 'testuser', 'password', 'Test', 'User', 'EMPLOYEE');
