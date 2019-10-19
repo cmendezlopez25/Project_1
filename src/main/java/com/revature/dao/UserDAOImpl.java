@@ -1,11 +1,17 @@
 package com.revature.dao;
 
+import java.beans.Statement;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.List;
 
 import com.revature.pojo.User;
+import com.revature.util.ConnectionFactory;
 
 public class UserDAOImpl implements UserDAO {
-
+	private Connection conn = ConnectionFactory.getConnection();
 	@Override
 	public void createUser(User user) {
 		// TODO Auto-generated method stub
@@ -14,8 +20,26 @@ public class UserDAOImpl implements UserDAO {
 
 	@Override
 	public User readUser(String username) {
-		// TODO Auto-generated method stub
-		return null;
+		User user = null;
+		String query = "select * from \"Users\" where \"username\"= ?";
+		try {
+			PreparedStatement stmt = conn.prepareStatement(query);
+			stmt.setString(1, username);
+			ResultSet rs = stmt.executeQuery();
+			if (rs.next()) {
+				user = new User();
+				user.setUsername(rs.getString("username"));
+				user.setFirstName(rs.getString("firstname"));
+				user.setLastName(rs.getString("lastname"));
+				user.setPassword(rs.getString("password"));
+				String role = rs.getString("role");
+				user.setRole(User.Role.valueOf(role));
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return user;
 	}
 
 	@Override
@@ -35,5 +59,8 @@ public class UserDAOImpl implements UserDAO {
 		// TODO Auto-generated method stub
 		return null;
 	}
-
+	
+	public void setConnection(Connection conn) {
+		this.conn = conn;
+	}
 }
