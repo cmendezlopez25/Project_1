@@ -82,6 +82,17 @@ public class Reimbursement {
 		this.dateCreated = dateCreated;
 		this.dateLastModified = dateLastModified;
 	}
+	
+	public Reimbursement(ReimbursementType type, double amount, ReimbursementStatus status,
+			Temporal dateCreated, Temporal dateLastModified) {
+		super();
+		this.id = 0;
+		this.type = type;
+		this.amount = amount;
+		this.status = status;
+		this.dateCreated = dateCreated;
+		this.dateLastModified = dateLastModified;
+	}
 
 	@Override
 	public int hashCode() {
