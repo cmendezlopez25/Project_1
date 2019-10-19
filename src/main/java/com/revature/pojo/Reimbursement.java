@@ -3,11 +3,11 @@ package com.revature.pojo;
 import java.time.temporal.Temporal;
 
 public class Reimbursement {
-	enum ReimbursementType {
+	public enum ReimbursementType {
 		UNIVERSITY_COURSES, SEMINARS, CERTIFICATION_PREPARATION_CLASSES, CERTIFICATION, TECHNICAL_TRAINING, OTHER
 	};
 
-	enum ReimbursementStatus {
+	public enum ReimbursementStatus {
 		PEND_DS, PEND_DH, PEND_BENCO, REQUESTED_INFO, PEND_PROOF, REJECTED, AWARDED, EXCEEDED
 	}
 
@@ -15,7 +15,6 @@ public class Reimbursement {
 	private ReimbursementType type;
 	private double amount;
 	private ReimbursementStatus status;
-	// private String[] files;
 	private Temporal dateCreated;
 	private Temporal dateLastModified;
 
@@ -40,7 +39,9 @@ public class Reimbursement {
 	}
 
 	public void setAmount(double amount) {
-		this.amount = amount;
+		double roundedAmount = amount * 100;
+		roundedAmount = Math.round(roundedAmount);
+		this.amount = roundedAmount / 100.0;
 	}
 
 	public ReimbursementStatus getStatus() {
@@ -77,7 +78,7 @@ public class Reimbursement {
 		super();
 		this.id = id;
 		this.type = type;
-		this.amount = amount;
+		this.setAmount(amount);;
 		this.status = status;
 		this.dateCreated = dateCreated;
 		this.dateLastModified = dateLastModified;
