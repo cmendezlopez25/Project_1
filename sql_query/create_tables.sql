@@ -19,7 +19,7 @@ ALTER TABLE public."Reimbursement" OWNER TO postgres;
 GRANT ALL ON TABLE public."Reimbursement" TO postgres;
 
 -- User
-CREATE TABLE public."User" (
+CREATE TABLE public."Users" (
 	id serial NOT NULL,
 	username text NOT NULL,
 	"password" text NOT NULL,
