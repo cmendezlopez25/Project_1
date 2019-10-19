@@ -2,7 +2,7 @@ package com.revature.pojo;
 
 public class User {
 	public enum Role {
-		EMPLOYEE, DIRECT_SUPERVISOR, DEPARTMENT_HEAD, BENCO_ASSOCIATE, BENCO_SUPERVISOR
+		EMPLOYEE, MANAGER, DEPARTMENT_HEAD, BENCO_ASSOCIATE, BENCO_MANAGER
 	};
 
 	private String username;

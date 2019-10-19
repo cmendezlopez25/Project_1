@@ -6,4 +6,5 @@ public interface UserService {
 	public User loginUser(String username, String password);
 	public void updateUser(User user);
 	public boolean deleteUser(User user);
+	//public int calculateRemainingReimbursementAmount(User user);
 }
