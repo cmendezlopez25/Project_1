@@ -1,23 +1,28 @@
 
-CREATE TABLE public."Users" (
-    id serial NOT NULL,
-    username text NOT NULL,
-    "password" text NOT NULL,
-    firstname text NOT NULL,
-    lastname text NOT NULL,
-    "role" text NOT NULL,
-    CONSTRAINT user_pk PRIMARY KEY (id),
-    CONSTRAINT user_un UNIQUE (username)
+-- Users 
+CREATE TABLE "Users" (
+	id serial NOT NULL,
+	username text NOT NULL,
+	"password" text NOT NULL,
+	firstname text NOT NULL,
+	lastname text NOT NULL,
+	"role" text NOT NULL,
+	"limit" numeric NOT NULL DEFAULT 1000,
+	supervisor text NULL,
+	CONSTRAINT user_pk PRIMARY KEY (id),
+	CONSTRAINT user_un UNIQUE (username),
+	CONSTRAINT users_supervisor_fk FOREIGN KEY (supervisor) REFERENCES "Users"(username) ON DELETE SET NULL
 );
 
 -- Permissions
 
-ALTER TABLE public."Users" OWNER TO postgres;
-GRANT ALL ON TABLE public."Users" TO postgres;
+ALTER TABLE "Users" OWNER TO postgres;
+GRANT ALL ON TABLE "Users" TO postgres;
+
+
 
 -- Reimbursement
--- DROP TABLE public."Reimbursement";
-CREATE TABLE public."Reimbursement" (
+CREATE TABLE "Reimbursement" (
 	id serial NOT NULL,
 	"type" text NOT NULL,
 	amount numeric(10,2) NOT NULL,
@@ -31,11 +36,12 @@ CREATE TABLE public."Reimbursement" (
 
 -- Permissions
 
-ALTER TABLE public."Reimbursement" OWNER TO postgres;
-GRANT ALL ON TABLE public."Reimbursement" TO postgres;
+ALTER TABLE "Reimbursement" OWNER TO postgres;
+GRANT ALL ON TABLE "Reimbursement" TO postgres;
+
 
 -- Notification
-CREATE TABLE public."Notification" (
+CREATE TABLE "Notification" (
 	id serial NOT NULL,
 	msg text NULL,
 	sender text NULL,
@@ -50,5 +56,6 @@ CREATE TABLE public."Notification" (
 );
 
 -- Permissions
-ALTER TABLE public."Notification" OWNER TO postgres;
-GRANT ALL ON TABLE public."Notification" TO postgres;
+
+ALTER TABLE "Notification" OWNER TO postgres;
+GRANT ALL ON TABLE "Notification" TO postgres;
