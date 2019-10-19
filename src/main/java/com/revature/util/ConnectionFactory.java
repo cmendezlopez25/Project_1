@@ -9,6 +9,14 @@ import java.sql.SQLException;
 import java.util.Properties;
 
 public class ConnectionFactory {
+	
+	static{
+        try {
+            Class.forName("org.postgresql.Driver");
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
 
 	private static String url;
 	
@@ -16,7 +24,7 @@ public class ConnectionFactory {
 	
 	private static String password;
 	
-	private static final String PROPERTIES_FILE = "src/main/resources/database.properties";
+	private static final String PROPERTIES_FILE = "D:\\Revature\\repo\\project_1\\Project_1\\src\\main\\resources\\database.properties";
 	
 	private static ConnectionFactory cf;
 	
