@@ -140,6 +140,14 @@ button {
 	background: transparent;
 }
 
+button.to-right {
+  position: absolute;
+  right: 5px;
+  bottom: 5px;
+  padding: 10px;
+  font-size: 10px;
+}
+
 button:hover {
 	cursor: pointer;
 }
@@ -148,6 +156,13 @@ iframe {
 	border: none !important;
 }
 
+label {
+  font-weight:bold;
+}
+
+label>span {
+  font-weight:normal;
+}
 
 /*//////////////////////////////////////////////////////////////////
 [ Utility ]*/
@@ -177,7 +192,6 @@ iframe {
   margin-top: 2px;
   margin-left: auto;
   margin-right: 5px;
-
 }
 
 .mw-90 {
