@@ -24,7 +24,7 @@ public class ConnectionFactory {
 	
 	private static String password;
 	
-	private static final String PROPERTIES_FILE = "D:\\Revature\\repo\\project_1\\Project_1\\src\\main\\resources\\database.properties";
+	private final String PROPERTIES_FILE = getProp().substring(6);
 	
 	private static ConnectionFactory cf;
 	
@@ -42,9 +42,7 @@ public class ConnectionFactory {
 	private ConnectionFactory() {
 		
 		Properties prop = new Properties();
-		
 		try (FileInputStream fis = new FileInputStream(PROPERTIES_FILE)) {
-			
 			prop.load(fis);
 			url = prop.getProperty("url");
 			user = prop.getProperty("user");
@@ -74,4 +72,7 @@ public class ConnectionFactory {
 		
 	}
 	
+	private String getProp() {
+		return getClass().getClassLoader().getResource("database.properties").toString();
+	}
 }
