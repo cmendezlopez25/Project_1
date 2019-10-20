@@ -20,8 +20,9 @@ public class ConnectionFactoryTest {
 		ResultSet res = null;
 		String actual = null;
 		Connection conn = ConnectionFactory.getConnection();
-		String query = "SELECT * FROM \"Users\" where id=1";
+		String query = "SELECT * FROM users WHERE username = 'testuser'";
 		try {
+			conn.setSchema("proj1_release");
 			stmt = conn.createStatement();
 			res = stmt.executeQuery(query);
 			if (res.next()) {

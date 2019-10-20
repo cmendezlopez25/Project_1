@@ -1,5 +1,9 @@
 package com.revature.service;
 
-public class NotificationServiceImpl implements NotificationService {
+import com.revature.dao.NotificationDAO;
+import com.revature.dao.NotificationDAOImpl;
 
+public class NotificationServiceImpl implements NotificationService {
+	private NotificationDAO notifDao = new NotificationDAOImpl();
+	
 }

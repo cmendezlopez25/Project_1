@@ -12,6 +12,14 @@ import com.revature.util.ConnectionFactory;
 
 public class UserDAOImpl implements UserDAO {
 	private Connection conn = ConnectionFactory.getConnection();
+	private String schema = "proj1_release";
+	{
+		try {
+			conn.setSchema(schema);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
 	@Override
 	public void createUser(User user) {
 		// TODO Auto-generated method stub
@@ -21,7 +29,7 @@ public class UserDAOImpl implements UserDAO {
 	@Override
 	public User readUser(String username) {
 		User user = null;
-		String query = "select * from \"Users\" where \"username\"= ?";
+		String query = "select * from users where username = ?";
 		try {
 			PreparedStatement stmt = conn.prepareStatement(query);
 			stmt.setString(1, username);

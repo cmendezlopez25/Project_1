@@ -1,6 +1,6 @@
 package com.revature.pojo;
 
-import java.time.temporal.Temporal;
+import java.time.LocalDate;
 
 public class Notification {
 	public enum NotificationStatus {
@@ -8,9 +8,11 @@ public class Notification {
 	};
 
 	private String msg;
-	private Temporal dateCreated;
+	private User sender;
+	private LocalDate dateCreated;
 	private int reimbursementId;
 	private NotificationStatus status;
+	private User receiver;
 
 	public String getMsg() {
 		return msg;
@@ -20,11 +22,11 @@ public class Notification {
 		this.msg = msg;
 	}
 
-	public Temporal getDateCreated() {
+	public LocalDate getDateCreated() {
 		return dateCreated;
 	}
 
-	public void setDateCreated(Temporal dateCreated) {
+	public void setDateCreated(LocalDate dateCreated) {
 		this.dateCreated = dateCreated;
 	}
 
@@ -43,18 +45,36 @@ public class Notification {
 	public void setStatus(NotificationStatus status) {
 		this.status = status;
 	}
+	
+	public User getSender() {
+		return sender;
+	}
+
+	public void setSender(User sender) {
+		this.sender = sender;
+	}
+
+	public User getReceiver() {
+		return receiver;
+	}
+
+	public void setReceiver(User receiver) {
+		this.receiver = receiver;
+	}
 
 	public Notification() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public Notification(String msg, User sender, Temporal dateCreated, int reimbursementId, NotificationStatus status) {
+	public Notification(String msg, User sender, LocalDate dateCreated, int reimbursementId, User receiver, NotificationStatus status) {
 		super();
 		this.msg = msg;
+		this.sender = sender;
 		this.dateCreated = dateCreated;
 		this.reimbursementId = reimbursementId;
 		this.status = status;
+		this.receiver = receiver;
 	}
 
 	@Override
