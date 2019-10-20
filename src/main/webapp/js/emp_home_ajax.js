@@ -1,27 +1,4 @@
 
-
-class Reimbursement {
-    constructor(id, type, amount, status, dateCreated, dateLastModified) {
-        this.id = id;
-        this.type = type;
-        this.amount = amount;
-        this.status = status;
-        this.dateCreated = dateCreated;
-        this.dateLastModified = dateLastModified;
-    }
-}
-
-
-class Announcement {
-    constructor(msg, sender, dateCreated, reimbursementId, status) {
-        this.msg = msg;
-        this.sender = sender;
-        this.dateCreated = dateCreated;
-        this.reimbursementId = reimbursementId;
-        this.status = status;
-    }
-}
-
 let reimbList = [
     new Reimbursement(1, "UNIVERSITY_COURSES", 100, "PEND_DS", "07/12/2019", "07/13/2019"),
     new Reimbursement(2, "SEMINARS", 50, "PEND_BENCO", "08/03/2019", "08/09/2019"), 
@@ -38,10 +15,10 @@ let annList = [
 $(document).ready(function() {
     // getAllReimbursement();
     displayReimbursements(reimbList);     // just for test, uncomment the line above when got servlet
+    
     displayAnnouncement(annList);
     displayNotification(annList);
     $('.reimb-row').click(function () {
-        console.log("called");
         getReimbursementById($(this));
     });
 });
@@ -49,7 +26,7 @@ $(document).ready(function() {
 
 function displayReimbursements(reimbList) {
     let list = document.getElementById("reimb-list");
-    
+    console.log("displaying reimbursement table")
     list.innerHTML = "";
     for (r of reimbList) {
         let tableRow = document.createElement("tr");
@@ -83,10 +60,10 @@ function getAllReimbursement() {
             if (xhr.status === 200) {
                 displayReimbursements(JSON.parse(xhr.responseText));
             } else {
-                console.log("status != 200")
+                console.log("status != 200");
             }
         } else {
-            console.log("Fetching reimbursements")
+            console.log("Fetching reimbursements");
         }
     }
     xhr.open("GET", "home", true);
@@ -112,7 +89,20 @@ function getReimbursementById(node) {
 }
 
 function getAllAnnouncement() {
-
+    let xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState === 4) {
+            if (xhr.status === 200) {
+                displayAnnouncement(JSON.parse(xhr.responseText));
+            } else {
+                console.log("status != 200");
+            }
+        } else {
+            console.log("Fetching reimbursements");
+        }
+    }
+    xhr.open("GET", "home", true);
+    xhr.send();
 }
 
 
@@ -133,14 +123,27 @@ function displayAnnouncement(announceList) {
 }
 
 function getAllNotification() {
-
+    let xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState === 4) {
+            if (xhr.status === 200) {
+                displayAnnouncement(JSON.parse(xhr.responseText));
+            } else {
+                console.log("status != 200");
+            }
+        } else {
+            console.log("Fetching reimbursements");
+        }
+    }
+    xhr.open("GET", "home", true);
+    xhr.send();
 }
 
 function displayNotification(notifList) {
     let list = document.getElementById("notif-list");
 
     list.innerHTML = "";
-    console.log('called');
+    console.log('displaying notification');
     for(n of notifList) {
         // check if the notification is reader not
         if(n.status !== "READ") {
