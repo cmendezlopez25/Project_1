@@ -32,12 +32,14 @@ let annList = [
     new Announcement("first read msg", "you supervisor", "07/13/2019", 2, "READ"),
     new Announcement("first unread msg", "some body", "07/14/2019", 3, "UNREAD"),
     new Announcement("second unread msg", "other supervisor", "07/16/2019", 5, "READ"),
+    new Announcement("first new msg", "other supervisor", "07/16/2019", 5, "NEW"),
 ];
 
 $(document).ready(function() {
     // getAllReimbursement();
     displayReimbursements(reimbList);     // just for test, uncomment the line above when got servlet
-    getAllAnnouncement(annList);
+    displayAnnouncement(annList);
+    displayNotification(annList);
     $('.reimb-row').click(function () {
         console.log("called");
         getReimbursementById($(this));
@@ -109,8 +111,12 @@ function getReimbursementById(node) {
     xhr.send();
 }
 
-// fetch all READ notification to display in Announcement
-function getAllAnnouncement(announceList) {
+function getAllAnnouncement() {
+
+}
+
+
+function displayAnnouncement(announceList) {
     let list = document.getElementById("ann-list");
 
     list.innerHTML = "";
@@ -121,6 +127,26 @@ function getAllAnnouncement(announceList) {
             let item = document.createElement("li");
             item.setAttribute("class", "list-group-item announcement");
             item.innerHTML = a.msg;
+            list.appendChild(item);
+        }
+    }
+}
+
+function getAllNotification() {
+
+}
+
+function displayNotification(notifList) {
+    let list = document.getElementById("notif-list");
+
+    list.innerHTML = "";
+    console.log('called');
+    for(n of notifList) {
+        // check if the notification is reader not
+        if(n.status !== "READ") {
+            let item = document.createElement("li");
+            item.setAttribute("class", "list-group-item notification");
+            item.innerHTML = n.msg;
             list.appendChild(item);
         }
     }
