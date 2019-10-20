@@ -1,17 +1,12 @@
 package com.revature.test.dao;
 
 import static org.junit.Assert.*;
-import static org.mockito.Mockito.validateMockitoUsage;
 import static org.mockito.Mockito.when;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.text.SimpleDateFormat;
-import java.time.Instant;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.sql.Date;
 import java.util.List;
@@ -27,7 +22,6 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.Spy;
 import org.mockito.runners.MockitoJUnitRunner;
-import org.postgresql.util.PSQLException;
 
 import com.revature.dao.ReimbursementDAOImpl;
 import com.revature.pojo.Reimbursement;
@@ -42,15 +36,16 @@ public class ReimbursementDaoTest {
 
 	private User fakeUser;
 	private User realUser;
+	private User supervisorUser;
 
 	private String schemaName = "proj1_test";
-	private String createSql = "insert into reimbursement(id, type, amount, status, datecreated, datelastmodified, username) values(?, ?, ?, ?, ?, ?, ?)";
+	private String createSql = "insert into reimbursement(id, type, amount, status, datecreated, datelastmodified, \"owner\") values(?, ?, ?, ?, ?, ?, ?)";
 	private String readOneSql = "select id, type, amount, status, datecreated, datelastmodified from reimbursement where id=?";
 	private String updateSql = "update reimbursement set amount=?, status=?, datelastmodified=? where id=?";
 	private String deleteSql = "delete from reimbursement where id=?";
 	private String readAllSql = "select id, type, amount, status, datecreated, datelastmodified from reimbursement";
-	private String readByUserSql = "";
-	private String readForSupervisorSql = "";
+	private String readByUserSql = "select id, type, amount, status, datecreated, datelastmodified from reimbursement where \"owner\"=?";
+	private String readForSupervisorSql = "select id, type, amount, status, datecreated, datelastmodified from reimbursement where \"owner\" in (select username from users where supervisor=?)";
 
 	@Mock
 	private Connection conn;
@@ -137,6 +132,13 @@ public class ReimbursementDaoTest {
 		realUser.setFirstName("Test");
 		realUser.setLastName("User");
 		realUser.setRole(User.Role.MANAGER);
+		
+		supervisorUser = new User();
+		supervisorUser.setUsername("supervisor");
+		supervisorUser.setPassword("password");
+		supervisorUser.setFirstName("Super");
+		supervisorUser.setLastName("Visor");
+		supervisorUser.setRole(User.Role.DEPARTMENT_HEAD);
 
 		Reimbursement reimburse = new Reimbursement(1, Reimbursement.ReimbursementType.CERTIFICATION, 200.00,
 				Reimbursement.ReimbursementStatus.PEND_DS, LocalDate.now(), LocalDate.now());
@@ -166,10 +168,23 @@ public class ReimbursementDaoTest {
 		when(conn.prepareStatement(readForSupervisorSql)).thenReturn(readForSupervisorStmt);
 
 		reimburseDao.setConnection(conn);
+		
+		reimburseDao.createReimbursement(reimburseList.get(0), realUser);
+		reimburseDao.createReimbursement(reimburseList.get(1), realUser);
+		reimburseDao.createReimbursement(reimburseList.get(2), realUser);
+		reimburseDao.createReimbursement(reimburseList.get(3), realUser);
+		reimburseDao.createReimbursement(reimburseList.get(4), realUser);
+		reimburseDao.createReimbursement(reimburseList.get(5), realUser);
 	}
 
 	@After
 	public void tearDown() throws Exception {
+		reimburseDao.deleteReimbursementById(reimburseList.get(0).getId());
+		reimburseDao.deleteReimbursementById(reimburseList.get(1).getId());
+		reimburseDao.deleteReimbursementById(reimburseList.get(2).getId());
+		reimburseDao.deleteReimbursementById(reimburseList.get(3).getId());
+		reimburseDao.deleteReimbursementById(reimburseList.get(4).getId());
+		reimburseDao.deleteReimbursementById(reimburseList.get(5).getId());
 	}
 
 	@Test(expected = NullPointerException.class)
@@ -189,19 +204,10 @@ public class ReimbursementDaoTest {
 
 	@Test
 	public void createReimburseNew() {
-		try {
-			assertTrue(reimburseDao.createReimbursement(reimburseList.get(1), realUser));
-			Mockito.verify(createStmt).setInt(1, reimburseList.get(1).getId());
-			Mockito.verify(createStmt).setString(2, reimburseList.get(1).getType().name());
-			Mockito.verify(createStmt).setDouble(3, reimburseList.get(1).getAmount());
-			Mockito.verify(createStmt).setString(4, reimburseList.get(1).getStatus().name());
-			Mockito.verify(createStmt).setDate(5, Date.valueOf(reimburseList.get(1).getDateCreated()));
-			Mockito.verify(createStmt).setDate(6, Date.valueOf(reimburseList.get(1).getDateLastModified()));
-			Mockito.verify(createStmt).setString(7, realUser.getUsername());
-			Mockito.verify(createStmt).executeUpdate();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+		Reimbursement reimburse = new Reimbursement(7, Reimbursement.ReimbursementType.CERTIFICATION, 200.00,
+				Reimbursement.ReimbursementStatus.PEND_DS, LocalDate.now(), LocalDate.now());
+		assertTrue(reimburseDao.createReimbursement(reimburse, realUser));
+		assertTrue(reimburseDao.deleteReimbursementById(reimburse.getId()));
 	}
 
 	@Test
@@ -255,12 +261,7 @@ public class ReimbursementDaoTest {
 	@Test
 	public void deleteReimburseExists() {
 		assertTrue(reimburseDao.deleteReimbursementById(reimburseList.get(0).getId()));
-		try {
-			Mockito.verify(deleteStmt).setInt(1, reimburseList.get(0).getId());
-			Mockito.verify(deleteStmt).executeUpdate();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+		assertTrue(reimburseDao.createReimbursement(reimburseList.get(0), realUser));
 	}
 
 	@Test
@@ -271,7 +272,6 @@ public class ReimbursementDaoTest {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-
 	}
 
 	@Test(expected = NullPointerException.class)
@@ -281,27 +281,37 @@ public class ReimbursementDaoTest {
 
 	@Test
 	public void readReimburseByUserDoesNotExist() {
-		assertEquals("Should return null", null, reimburseDao.getAllReimbursementsByUser(fakeUser));
+		assertEquals("Should return empty list", new ArrayList<Reimbursement>(), reimburseDao.getAllReimbursementsByUser(fakeUser));
 	}
 
 	@Test
 	public void readReimburseByUserExists() {
 		assertEquals("Should return " + reimburseList.toString(), reimburseList, reimburseDao.getAllReimbursementsByUser(realUser));
+		try {
+			Mockito.verify(readByUserStmt).executeQuery();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 
 	@Test(expected = NullPointerException.class)
 	public void readReimburseForSupervisorNull() {
-
+		reimburseDao.getAllReimbursementsForSupervisor(null);
 	}
 
 	@Test
 	public void readReimburseForSupervisorDoesNotExist() {
-
+		assertEquals("Should return empty list", new ArrayList<Reimbursement>(), reimburseDao.getAllReimbursementsForSupervisor(realUser));
 	}
 
 	@Test
 	public void readReimburseForSupervisorExists() {
-
+		assertEquals("Should return " + reimburseList.toString(), reimburseList, reimburseDao.getAllReimbursementsForSupervisor(supervisorUser));
+		try {
+			Mockito.verify(readForSupervisorStmt).executeQuery();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 
 	public ReimbursementDaoTest() throws SQLException {

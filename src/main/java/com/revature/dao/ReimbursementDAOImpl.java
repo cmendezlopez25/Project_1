@@ -22,15 +22,16 @@ public class ReimbursementDAOImpl implements ReimbursementDAO {
 		try {
 			conn.setSchema(schema);
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
-	private String createSql = "insert into reimbursement(id, type, amount, status, datecreated, datelastmodified, username) values(?, ?, ?, ?, ?, ?, ?)";
+	private String createSql = "insert into reimbursement(id, type, amount, status, datecreated, datelastmodified, \"owner\") values(?, ?, ?, ?, ?, ?, ?)";
 	private String readOneSql = "select id, type, amount, status, datecreated, datelastmodified from reimbursement where id=?";
 	private String updateSql = "update reimbursement set amount=?, status=?, datelastmodified=? where id=?";
 	private String deleteSql = "delete from reimbursement where id=?";
 	private String readAllSql = "select id, type, amount, status, datecreated, datelastmodified from reimbursement";
+	private String readByUserSql = "select id, type, amount, status, datecreated, datelastmodified from reimbursement where \"owner\"=?";
+	private String readForSupervisorSql = "select id, type, amount, status, datecreated, datelastmodified from reimbursement where \"owner\" in (select username from users where supervisor=?)";
 
 	@Override
 	public boolean createReimbursement(Reimbursement reimburse, User user) {
@@ -59,12 +60,12 @@ public class ReimbursementDAOImpl implements ReimbursementDAO {
 	@Override
 	public Reimbursement getReimbursementById(int id) {
 		Reimbursement reimburse = null;
-		
+
 		try {
 			PreparedStatement stmt = conn.prepareStatement(readOneSql);
 			stmt.setInt(1, id);
 			ResultSet rs = stmt.executeQuery();
-			if(rs != null && rs.next()) {
+			if (rs != null && rs.next()) {
 				reimburse = new Reimbursement();
 				reimburse.setId(rs.getInt(1));
 				reimburse.setType(Reimbursement.ReimbursementType.valueOf(rs.getString(2)));
@@ -82,10 +83,10 @@ public class ReimbursementDAOImpl implements ReimbursementDAO {
 
 	@Override
 	public boolean updateReimbursement(Reimbursement reimburse) {
-		if(reimburse == null) {
+		if (reimburse == null) {
 			throw new NullPointerException();
 		}
-		
+
 		try {
 			PreparedStatement stmt = conn.prepareStatement(updateSql);
 			stmt.setDouble(1, reimburse.getAmount());
@@ -100,7 +101,7 @@ public class ReimbursementDAOImpl implements ReimbursementDAO {
 			e.printStackTrace();
 			return false;
 		}
-		
+
 		return true;
 	}
 
@@ -125,7 +126,7 @@ public class ReimbursementDAOImpl implements ReimbursementDAO {
 		List<Reimbursement> reimburseList = new ArrayList<Reimbursement>();
 		try {
 			ResultSet rs = conn.prepareStatement(readAllSql).executeQuery();
-			while(rs != null && rs.next()) {
+			while (rs != null && rs.next()) {
 				Reimbursement reimburse = new Reimbursement();
 				reimburse.setId(rs.getInt(1));
 				reimburse.setType(Reimbursement.ReimbursementType.valueOf(rs.getString(2)));
@@ -143,14 +144,56 @@ public class ReimbursementDAOImpl implements ReimbursementDAO {
 
 	@Override
 	public List<Reimbursement> getAllReimbursementsByUser(User user) {
-		// TODO Auto-generated method stub
-		return null;
+		if (user == null) {
+			throw new NullPointerException();
+		}
+
+		List<Reimbursement> reimburseList = new ArrayList<Reimbursement>();
+		try {
+			PreparedStatement stmt = conn.prepareStatement(readByUserSql);
+			stmt.setString(1, user.getUsername());
+			ResultSet rs = stmt.executeQuery();
+			while (rs != null && rs.next()) {
+				Reimbursement reimburse = new Reimbursement();
+				reimburse.setId(rs.getInt(1));
+				reimburse.setType(Reimbursement.ReimbursementType.valueOf(rs.getString(2)));
+				reimburse.setAmount(rs.getDouble(3));
+				reimburse.setStatus(Reimbursement.ReimbursementStatus.valueOf(rs.getString(4)));
+				reimburse.setDateCreated(rs.getDate(5).toLocalDate());
+				reimburse.setDateLastModified(rs.getDate(6).toLocalDate());
+				reimburseList.add(reimburse);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return reimburseList;
 	}
 
 	@Override
 	public List<Reimbursement> getAllReimbursementsForSupervisor(User user) {
-		// TODO Auto-generated method stub
-		return null;
+		if (user == null) {
+			throw new NullPointerException();
+		}
+		
+		List<Reimbursement> reimburseList = new ArrayList<Reimbursement>();
+		try {
+			PreparedStatement stmt = conn.prepareStatement(readForSupervisorSql);
+			stmt.setString(1, user.getUsername());
+			ResultSet rs = stmt.executeQuery();
+			while (rs != null && rs.next()) {
+				Reimbursement reimburse = new Reimbursement();
+				reimburse.setId(rs.getInt(1));
+				reimburse.setType(Reimbursement.ReimbursementType.valueOf(rs.getString(2)));
+				reimburse.setAmount(rs.getDouble(3));
+				reimburse.setStatus(Reimbursement.ReimbursementStatus.valueOf(rs.getString(4)));
+				reimburse.setDateCreated(rs.getDate(5).toLocalDate());
+				reimburse.setDateLastModified(rs.getDate(6).toLocalDate());
+				reimburseList.add(reimburse);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return reimburseList;
 	}
 
 	public void setConnection(Connection conn) {

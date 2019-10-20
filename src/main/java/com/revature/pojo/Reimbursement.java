@@ -70,7 +70,6 @@ public class Reimbursement {
 
 	public Reimbursement() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	public Reimbursement(int id, ReimbursementType type, double amount, ReimbursementStatus status,
@@ -79,17 +78,6 @@ public class Reimbursement {
 		this.id = id;
 		this.type = type;
 		this.setAmount(amount);
-		this.status = status;
-		this.dateCreated = dateCreated;
-		this.dateLastModified = dateLastModified;
-	}
-	
-	public Reimbursement(ReimbursementType type, double amount, ReimbursementStatus status,
-			Temporal dateCreated, Temporal dateLastModified) {
-		super();
-		this.id = 0;
-		this.type = type;
-		this.amount = amount;
 		this.status = status;
 		this.dateCreated = dateCreated;
 		this.dateLastModified = dateLastModified;
