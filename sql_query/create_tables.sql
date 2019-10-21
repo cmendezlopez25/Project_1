@@ -29,9 +29,9 @@ CREATE TABLE reimbursement (
 	status text NOT NULL,
 	datecreated timestamp NOT NULL,
 	datelastmodified timestamp NOT NULL,
-	username text NULL,
+	"owner" text NULL,
 	CONSTRAINT reimbursement_pk PRIMARY KEY (id),
-	CONSTRAINT reimbursement_fk FOREIGN KEY (username) REFERENCES users(username) ON DELETE SET NULL
+	CONSTRAINT reimbursement_fk FOREIGN KEY ("owner") REFERENCES users(username) ON DELETE SET NULL
 );
 
 -- Permissions

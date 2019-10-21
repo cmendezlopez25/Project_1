@@ -1,6 +1,6 @@
 package com.revature.pojo;
 
-import java.time.temporal.Temporal;
+import java.time.LocalDate;
 
 public class Reimbursement {
 	public enum ReimbursementType {
@@ -16,8 +16,8 @@ public class Reimbursement {
 	private ReimbursementType type;
 	private double amount;
 	private ReimbursementStatus status;
-	private Temporal dateCreated;
-	private Temporal dateLastModified;
+	private LocalDate dateCreated;
+	private LocalDate dateLastModified;
 
 	public int getId() {
 		return id;
@@ -53,11 +53,11 @@ public class Reimbursement {
 		this.status = status;
 	}
 
-	public Temporal getDateCreated() {
+	public LocalDate getDateCreated() {
 		return dateCreated;
 	}
 
-	public void setDateCreated(Temporal dateCreated) {
+	public void setDateCreated(LocalDate dateCreated) {
 		this.dateCreated = dateCreated;
 	}
 
@@ -69,36 +69,24 @@ public class Reimbursement {
 		this.ownerUserName = ownerUserName;
 	}
 
-	public Temporal getDateLastModified() {
+	public LocalDate getDateLastModified() {
 		return dateLastModified;
 	}
 
-	public void setDateLastModified(Temporal dateLastModified) {
+	public void setDateLastModified(LocalDate dateLastModified) {
 		this.dateLastModified = dateLastModified;
 	}
 
 	public Reimbursement() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	public Reimbursement(int id, ReimbursementType type, double amount, ReimbursementStatus status,
-			Temporal dateCreated, Temporal dateLastModified) {
+			LocalDate dateCreated, LocalDate dateLastModified) {
 		super();
 		this.id = id;
 		this.type = type;
-		this.setAmount(amount);;
-		this.status = status;
-		this.dateCreated = dateCreated;
-		this.dateLastModified = dateLastModified;
-	}
-	
-	public Reimbursement(ReimbursementType type, double amount, ReimbursementStatus status,
-			Temporal dateCreated, Temporal dateLastModified) {
-		super();
-		this.id = 0;
-		this.type = type;
-		this.amount = amount;
+		this.setAmount(amount);
 		this.status = status;
 		this.dateCreated = dateCreated;
 		this.dateLastModified = dateLastModified;

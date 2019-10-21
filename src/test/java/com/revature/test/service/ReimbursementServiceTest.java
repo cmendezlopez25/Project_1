@@ -4,9 +4,7 @@ import static org.junit.Assert.*;
 import static org.mockito.Mockito.when;
 
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.time.LocalDateTime;
-import java.time.temporal.Temporal;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -20,12 +18,9 @@ import org.junit.runner.RunWith;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.Spy;
 
 import com.revature.dao.ReimbursementDAO;
 import com.revature.pojo.Reimbursement;
-import com.revature.pojo.Reimbursement.ReimbursementStatus;
-import com.revature.pojo.Reimbursement.ReimbursementType;
 import com.revature.pojo.User;
 import com.revature.service.ReimbursementServiceImpl;
 
@@ -58,33 +53,32 @@ public class ReimbursementServiceTest {
 		fakeUser = new User();
 		fakeUser.setUsername("wrong");
 		fakeUser.setPassword("wrong");
-		fakeUser.setFirstName("Wrong");
+		fakeUser.setFirstName("Something");
 		fakeUser.setLastName("Wrong");
 		fakeUser.setRole(User.Role.EMPLOYEE);
 		
 		realUser = new User();
-		fakeUser.setUsername("testuser");
-		fakeUser.setPassword("password");
-		fakeUser.setFirstName("Test");
-		fakeUser.setLastName("User");
-		fakeUser.setRole(User.Role.MANAGER);
-		
-		Reimbursement reimburse = new Reimbursement(1, Reimbursement.ReimbursementType.CERTIFICATION, 200.00, Reimbursement.ReimbursementStatus.PEND_DS, LocalDateTime.now(), LocalDateTime.now());
-		reimburseList.add(reimburse);
-		reimburse = new Reimbursement(2, Reimbursement.ReimbursementType.CERTIFICATION_PREPARATION_CLASSES, 200.00, Reimbursement.ReimbursementStatus.PEND_DS, LocalDateTime.now(), LocalDateTime.now());
-		reimburseList.add(reimburse);
-		reimburse = new Reimbursement(3, Reimbursement.ReimbursementType.OTHER, 200.00, Reimbursement.ReimbursementStatus.PEND_DS, LocalDateTime.now(), LocalDateTime.now());
-		reimburseList.add(reimburse);
-		reimburse = new Reimbursement(4, Reimbursement.ReimbursementType.SEMINARS, 200.00, Reimbursement.ReimbursementStatus.PEND_DS, LocalDateTime.now(), LocalDateTime.now());
-		reimburseList.add(reimburse);
-		reimburse = new Reimbursement(5, Reimbursement.ReimbursementType.TECHNICAL_TRAINING, 200.00, Reimbursement.ReimbursementStatus.PEND_DS, LocalDateTime.now(), LocalDateTime.now());
-		reimburseList.add(reimburse);
-		reimburse = new Reimbursement(6, Reimbursement.ReimbursementType.UNIVERSITY_COURSES, 200.00, Reimbursement.ReimbursementStatus.PEND_DS, LocalDateTime.now(), LocalDateTime.now());
-		reimburseList.add(reimburse);
-		
+		realUser.setUsername("testuser");
+		realUser.setPassword("password");
+		realUser.setFirstName("Test");
+		realUser.setLastName("User");
+		realUser.setRole(User.Role.MANAGER);
 
-		when(reimburseDao.createReimbursement(reimburseList.get(0))).thenReturn(false);
-		when(reimburseDao.createReimbursement(reimburseList.get(1))).thenReturn(true);
+		Reimbursement reimburse = new Reimbursement(1, Reimbursement.ReimbursementType.CERTIFICATION, 200.00, Reimbursement.ReimbursementStatus.PEND_DS, LocalDate.now(), LocalDate.now());
+		reimburseList.add(reimburse);
+		reimburse = new Reimbursement(2, Reimbursement.ReimbursementType.CERTIFICATION_PREPARATION_CLASSES, 200.00, Reimbursement.ReimbursementStatus.PEND_DS, LocalDate.now(), LocalDate.now());
+		reimburseList.add(reimburse);
+		reimburse = new Reimbursement(3, Reimbursement.ReimbursementType.OTHER, 200.00, Reimbursement.ReimbursementStatus.PEND_DS, LocalDate.now(), LocalDate.now());
+		reimburseList.add(reimburse);
+		reimburse = new Reimbursement(4, Reimbursement.ReimbursementType.SEMINARS, 200.00, Reimbursement.ReimbursementStatus.PEND_DS, LocalDate.now(), LocalDate.now());
+		reimburseList.add(reimburse);
+		reimburse = new Reimbursement(5, Reimbursement.ReimbursementType.TECHNICAL_TRAINING, 200.00, Reimbursement.ReimbursementStatus.PEND_DS, LocalDate.now(), LocalDate.now());
+		reimburseList.add(reimburse);
+		reimburse = new Reimbursement(6, Reimbursement.ReimbursementType.UNIVERSITY_COURSES, 200.00, Reimbursement.ReimbursementStatus.PEND_DS, LocalDate.now(), LocalDate.now());
+		reimburseList.add(reimburse);
+
+		when(reimburseDao.createReimbursement(reimburseList.get(0), realUser)).thenReturn(false);
+		when(reimburseDao.createReimbursement(reimburseList.get(1), fakeUser)).thenReturn(true);
 		when(reimburseDao.getReimbursementById(0)).thenReturn(null);
 		when(reimburseDao.getReimbursementById(1)).thenReturn(reimburseList.get(0));
 		when(reimburseDao.updateReimbursement(reimburseList.get(0))).thenReturn(false);
@@ -107,18 +101,23 @@ public class ReimbursementServiceTest {
 	}
 
 	@Test(expected = NullPointerException.class)
-	public void createReimbursementNull() {
-		reimburseService.createReimbursement(null);
+	public void createReimbursementNullReimbursement() {
+		reimburseService.createReimbursement(null, realUser);
+	}
+
+	@Test(expected = NullPointerException.class)
+	public void createReimbursementNullUser() {
+		reimburseService.createReimbursement(reimburseList.get(1), null);
 	}
 
 	@Test
 	public void createReimbursementExisting() {
-		assertFalse(reimburseService.createReimbursement(reimburseList.get(0)));
+		assertFalse(reimburseService.createReimbursement(reimburseList.get(0), realUser));
 	}
 	
 	@Test
 	public void createReimbursementNew() {
-		assertTrue(reimburseService.createReimbursement(reimburseList.get(1)));
+		assertTrue(reimburseService.createReimbursement(reimburseList.get(1), fakeUser));
 	}
 	
 	@Test
