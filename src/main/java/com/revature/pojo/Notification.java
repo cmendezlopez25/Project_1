@@ -83,7 +83,9 @@ public class Notification {
 		int result = 1;
 		result = prime * result + ((dateCreated == null) ? 0 : dateCreated.hashCode());
 		result = prime * result + ((msg == null) ? 0 : msg.hashCode());
+		result = prime * result + ((receiver == null) ? 0 : receiver.hashCode());
 		result = prime * result + reimbursementId;
+		result = prime * result + ((sender == null) ? 0 : sender.hashCode());
 		result = prime * result + ((status == null) ? 0 : status.hashCode());
 		return result;
 	}
@@ -107,7 +109,17 @@ public class Notification {
 				return false;
 		} else if (!msg.equals(other.msg))
 			return false;
+		if (receiver == null) {
+			if (other.receiver != null)
+				return false;
+		} else if (!receiver.equals(other.receiver))
+			return false;
 		if (reimbursementId != other.reimbursementId)
+			return false;
+		if (sender == null) {
+			if (other.sender != null)
+				return false;
+		} else if (!sender.equals(other.sender))
 			return false;
 		if (status != other.status)
 			return false;
@@ -116,7 +128,9 @@ public class Notification {
 
 	@Override
 	public String toString() {
-		return "Notification [msg=" + msg + ", dateCreated=" + dateCreated + ", reimbursementId=" + reimbursementId
-				+ ", status=" + status + "]";
+		return "Notification [msg=" + msg + ", sender=" + sender + ", dateCreated=" + dateCreated + ", reimbursementId="
+				+ reimbursementId + ", status=" + status + ", receiver=" + receiver + "]";
 	}
+
+	
 }

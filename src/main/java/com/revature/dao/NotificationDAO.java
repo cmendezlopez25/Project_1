@@ -7,7 +7,7 @@ import com.revature.pojo.Notification;
 import com.revature.pojo.User;
 
 public interface NotificationDAO {
-	public boolean creatNotification(Notification notif);
+	public boolean createNotification(Notification notif);
 	public Notification getNotification(int id);
 	public boolean updateNotification(Notification notif);
 	public boolean deleteNotificationById(int id);

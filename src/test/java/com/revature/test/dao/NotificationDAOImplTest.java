@@ -39,10 +39,15 @@ public class NotificationDAOImplTest {
 
 	@Test
 	public void getNotificationSuccess() {
-		User sender = new User("testuser", "password", "test", "test", Role.EMPLOYEE);
-		User receiver = new User("testuser", "password", "test", "test", Role.EMPLOYEE);
+		User sender = new User("testuser", "password", "test", "user", Role.EMPLOYEE);
+		User receiver = new User("testuser", "password", "test", "user", Role.EMPLOYEE);
 		Notification expect = new Notification("some msg", sender, LocalDate.parse("2019-10-20"), 1, receiver, NotificationStatus.NEW);
 		assertEquals(expect, notifDao.getNotification(5));
+	}
+	
+	@Test
+	public void getNotificationNull() {
+		assertEquals(null, notifDao.getNotification(-1));
 	}
 
 }

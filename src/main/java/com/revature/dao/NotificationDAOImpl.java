@@ -25,7 +25,7 @@ public class NotificationDAOImpl implements NotificationDAO {
 		}
 	}
 	@Override
-	public boolean creatNotification(Notification notif) {
+	public boolean createNotification(Notification notif) {
 		String query = "INSERT INTO notification (msg,sender,datecreated,status,receiver,reimbid) " + 
 						"VALUES (?,?,?,?,?,?);";
 		try {
