@@ -264,6 +264,12 @@ label>span {
   padding:5px;
 }
 
+#invalid-user {
+  display: none;
+  color: red;
+  text-align: center;
+}
+
 
 /*==================================================================
 [ Form ]*/

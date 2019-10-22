@@ -28,8 +28,10 @@ public class LoginServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String username = request.getParameter("username");
-		String password = request.getParameter("password");
+		String username = request.getReader().readLine();
+		String password = request.getReader().readLine();
+		System.out.println(username);
+		System.out.println(password);
 		try {
 			User user = userService.loginUser(username, password);
 			if (user != null) {
