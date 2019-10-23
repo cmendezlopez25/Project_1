@@ -81,12 +81,13 @@ public class Reimbursement {
 		super();
 	}
 
-	public Reimbursement(int id, ReimbursementType type, double amount, ReimbursementStatus status,
-			LocalDate dateCreated, LocalDate dateLastModified) {
+	public Reimbursement(int id, String ownerUserName, ReimbursementType type, double amount,
+			ReimbursementStatus status, LocalDate dateCreated, LocalDate dateLastModified) {
 		super();
 		this.id = id;
+		this.ownerUserName = ownerUserName;
 		this.type = type;
-		this.setAmount(amount);
+		this.amount = amount;
 		this.status = status;
 		this.dateCreated = dateCreated;
 		this.dateLastModified = dateLastModified;
@@ -102,6 +103,7 @@ public class Reimbursement {
 		result = prime * result + ((dateCreated == null) ? 0 : dateCreated.hashCode());
 		result = prime * result + ((dateLastModified == null) ? 0 : dateLastModified.hashCode());
 		result = prime * result + id;
+		result = prime * result + ((ownerUserName == null) ? 0 : ownerUserName.hashCode());
 		result = prime * result + ((status == null) ? 0 : status.hashCode());
 		result = prime * result + ((type == null) ? 0 : type.hashCode());
 		return result;
@@ -130,6 +132,11 @@ public class Reimbursement {
 			return false;
 		if (id != other.id)
 			return false;
+		if (ownerUserName == null) {
+			if (other.ownerUserName != null)
+				return false;
+		} else if (!ownerUserName.equals(other.ownerUserName))
+			return false;
 		if (status != other.status)
 			return false;
 		if (type != other.type)
@@ -139,7 +146,8 @@ public class Reimbursement {
 
 	@Override
 	public String toString() {
-		return "Reimbursement [id=" + id + ", type=" + type + ", amount=" + amount + ", status=" + status
-				+ ", dateCreated=" + dateCreated + ", dateLastModified=" + dateLastModified + "]";
+		return "Reimbursement [id=" + id + ", ownerUserName=" + ownerUserName + ", type=" + type + ", amount=" + amount
+				+ ", status=" + status + ", dateCreated=" + dateCreated + ", dateLastModified=" + dateLastModified
+				+ "]";
 	}
 }

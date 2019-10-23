@@ -26,16 +26,16 @@ public class ReimbursementDAOImpl implements ReimbursementDAO {
 		}
 	}
 	private String createSql = "insert into reimbursement(id, type, amount, status, datecreated, datelastmodified, \"owner\") values(?, ?, ?, ?, ?, ?, ?)";
-	private String readOneSql = "select id, type, amount, status, datecreated, datelastmodified from reimbursement where id=?";
+	private String readOneSql = "select * from reimbursement where id=?";
 	private String updateSql = "update reimbursement set amount=?, status=?, datelastmodified=? where id=?";
 	private String deleteSql = "delete from reimbursement where id=?";
-	private String readAllSql = "select id, type, amount, status, datecreated, datelastmodified from reimbursement";
-	private String readByUserSql = "select id, type, amount, status, datecreated, datelastmodified from reimbursement where \"owner\"=?";
-	private String readForSupervisorSql = "select id, type, amount, status, datecreated, datelastmodified from reimbursement where \"owner\" in (select username from users where supervisor=?)";
+	private String readAllSql = "select * from reimbursement";
+	private String readByUserSql = "select * from reimbursement where \"owner\"=?";
+	private String readForSupervisorSql = "select * from reimbursement where \"owner\" in (select username from users where supervisor=?)";
 
 	@Override
-	public boolean createReimbursement(Reimbursement reimburse, User user) {
-		if (reimburse == null || user == null) {
+	public boolean createReimbursement(Reimbursement reimburse) {
+		if (reimburse == null) {
 			throw new NullPointerException();
 		}
 
@@ -47,7 +47,7 @@ public class ReimbursementDAOImpl implements ReimbursementDAO {
 			stmt.setString(4, reimburse.getStatus().name());
 			stmt.setDate(5, Date.valueOf(reimburse.getDateCreated()));
 			stmt.setDate(6, Date.valueOf(reimburse.getDateLastModified()));
-			stmt.setString(7, user.getUsername());
+			stmt.setString(7, reimburse.getOwnerUserName());
 			stmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -73,6 +73,7 @@ public class ReimbursementDAOImpl implements ReimbursementDAO {
 				reimburse.setStatus(Reimbursement.ReimbursementStatus.valueOf(rs.getString(4)));
 				reimburse.setDateCreated(rs.getDate(5).toLocalDate());
 				reimburse.setDateLastModified(rs.getDate(6).toLocalDate());
+				reimburse.setOwnerUserName(rs.getString(7));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -134,6 +135,7 @@ public class ReimbursementDAOImpl implements ReimbursementDAO {
 				reimburse.setStatus(Reimbursement.ReimbursementStatus.valueOf(rs.getString(4)));
 				reimburse.setDateCreated(rs.getDate(5).toLocalDate());
 				reimburse.setDateLastModified(rs.getDate(6).toLocalDate());
+				reimburse.setOwnerUserName(rs.getString(7));
 				reimburseList.add(reimburse);
 			}
 		} catch (SQLException e) {
@@ -161,6 +163,7 @@ public class ReimbursementDAOImpl implements ReimbursementDAO {
 				reimburse.setStatus(Reimbursement.ReimbursementStatus.valueOf(rs.getString(4)));
 				reimburse.setDateCreated(rs.getDate(5).toLocalDate());
 				reimburse.setDateLastModified(rs.getDate(6).toLocalDate());
+				reimburse.setOwnerUserName(rs.getString(7));
 				reimburseList.add(reimburse);
 			}
 		} catch (SQLException e) {
@@ -188,6 +191,7 @@ public class ReimbursementDAOImpl implements ReimbursementDAO {
 				reimburse.setStatus(Reimbursement.ReimbursementStatus.valueOf(rs.getString(4)));
 				reimburse.setDateCreated(rs.getDate(5).toLocalDate());
 				reimburse.setDateLastModified(rs.getDate(6).toLocalDate());
+				reimburse.setOwnerUserName(rs.getString(7));
 				reimburseList.add(reimburse);
 			}
 		} catch (SQLException e) {
