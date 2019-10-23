@@ -29,6 +29,7 @@ public class NotificationDAOImpl implements NotificationDAO {
 	}
 	@Override
 	public boolean createNotification(Notification notif) {
+		if (notif==null) throw new NullPointerException();
 		String query = "INSERT INTO notification (msg,sender,datecreated,status,receiver,reimbid) " + 
 						"VALUES (?,?,?,?,?,?);";
 		try {
@@ -41,15 +42,16 @@ public class NotificationDAOImpl implements NotificationDAO {
 			stmt.setInt(6, notif.getReimbursementId());
 			int row = stmt.executeUpdate();
 			if (row >= 1) return true;
+			System.out.println("Create Notification: Fail to create new Notif no row is added");
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+			System.out.println("Create Notification: Fail to create new Notif due to SQLException");
 			e.printStackTrace();
 		}
 		return false;
 	}
 
 	@Override
-	public Notification getNotification(int id) {
+	public Notification getNotificationById(int id) {
 		String query = "SELECT * FROM notification WHERE id = ?";
 		PreparedStatement stmt;
 		try {
