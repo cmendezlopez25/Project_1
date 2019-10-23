@@ -91,7 +91,7 @@ public class NotificationDAOImpl implements NotificationDAO {
 
 	@Override
 	public List<Notification> getAllNotificationsByUser(User user) {
-		if (user == null) return null;
+		if (user == null) throw new NullPointerException();
 		// TODO Auto-generated method stub
 		String query = "SELECT * FROM notification WHERE receiver = ?";
 		PreparedStatement stmt;
