@@ -16,12 +16,12 @@ public class ReimbursementServiceImpl implements ReimbursementService {
 	private String folderPath = "../../resources/";
 
 	@Override
-	public boolean createReimbursement(Reimbursement reimburse, User user) {
-		if (reimburse == null || user == null) {
+	public boolean createReimbursement(Reimbursement reimburse) {
+		if (reimburse == null) {
 			throw new NullPointerException();
 		}
 		
-		if(reimburseDao.createReimbursement(reimburse, user) == true) {
+		if(reimburseDao.createReimbursement(reimburse) == true) {
 			return true;
 		}
 		
