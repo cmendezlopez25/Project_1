@@ -7,7 +7,7 @@ import com.revature.pojo.Reimbursement;
 import com.revature.pojo.User;
 
 public interface ReimbursementService {
-	public boolean createReimbursement(Reimbursement reimburse, User user);
+	public boolean createReimbursement(Reimbursement reimburse);
 	public Reimbursement getReimbursementById(int id);
 	public boolean updateReimbursement(Reimbursement reimburse);
 	public boolean deleteReimbursementById(int id);

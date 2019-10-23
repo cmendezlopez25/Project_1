@@ -40,12 +40,12 @@ public class ReimbursementDaoTest {
 
 	private String schemaName = "proj1_test";
 	private String createSql = "insert into reimbursement(id, type, amount, status, datecreated, datelastmodified, \"owner\") values(?, ?, ?, ?, ?, ?, ?)";
-	private String readOneSql = "select id, type, amount, status, datecreated, datelastmodified from reimbursement where id=?";
+	private String readOneSql = "select * from reimbursement where id=?";
 	private String updateSql = "update reimbursement set amount=?, status=?, datelastmodified=? where id=?";
 	private String deleteSql = "delete from reimbursement where id=?";
-	private String readAllSql = "select id, type, amount, status, datecreated, datelastmodified from reimbursement";
-	private String readByUserSql = "select id, type, amount, status, datecreated, datelastmodified from reimbursement where \"owner\"=?";
-	private String readForSupervisorSql = "select id, type, amount, status, datecreated, datelastmodified from reimbursement where \"owner\" in (select username from users where supervisor=?)";
+	private String readAllSql = "select * from reimbursement";
+	private String readByUserSql = "select * from reimbursement where \"owner\"=?";
+	private String readForSupervisorSql = "select * from reimbursement where \"owner\" in (select username from users where supervisor=?)";
 
 	@Mock
 	private Connection conn;
@@ -140,22 +140,22 @@ public class ReimbursementDaoTest {
 		supervisorUser.setLastName("Visor");
 		supervisorUser.setRole(User.Role.DEPARTMENT_HEAD);
 
-		Reimbursement reimburse = new Reimbursement(1, Reimbursement.ReimbursementType.CERTIFICATION, 200.00,
+		Reimbursement reimburse = new Reimbursement(1, realUser.getUsername(), Reimbursement.ReimbursementType.CERTIFICATION, 200.00,
 				Reimbursement.ReimbursementStatus.PEND_DS, LocalDate.now(), LocalDate.now());
 		reimburseList.add(reimburse);
-		reimburse = new Reimbursement(2, Reimbursement.ReimbursementType.CERTIFICATION_PREPARATION_CLASSES, 200.00,
+		reimburse = new Reimbursement(2, realUser.getUsername(), Reimbursement.ReimbursementType.CERTIFICATION_PREPARATION_CLASSES, 200.00,
 				Reimbursement.ReimbursementStatus.PEND_DS, LocalDate.now(), LocalDate.now());
 		reimburseList.add(reimburse);
-		reimburse = new Reimbursement(3, Reimbursement.ReimbursementType.OTHER, 200.00,
+		reimburse = new Reimbursement(3, realUser.getUsername(), Reimbursement.ReimbursementType.OTHER, 200.00,
 				Reimbursement.ReimbursementStatus.PEND_DS, LocalDate.now(), LocalDate.now());
 		reimburseList.add(reimburse);
-		reimburse = new Reimbursement(4, Reimbursement.ReimbursementType.SEMINARS, 200.00,
+		reimburse = new Reimbursement(4, realUser.getUsername(), Reimbursement.ReimbursementType.SEMINARS, 200.00,
 				Reimbursement.ReimbursementStatus.PEND_DS, LocalDate.now(), LocalDate.now());
 		reimburseList.add(reimburse);
-		reimburse = new Reimbursement(5, Reimbursement.ReimbursementType.TECHNICAL_TRAINING, 200.00,
+		reimburse = new Reimbursement(5, realUser.getUsername(), Reimbursement.ReimbursementType.TECHNICAL_TRAINING, 200.00,
 				Reimbursement.ReimbursementStatus.PEND_DS, LocalDate.now(), LocalDate.now());
 		reimburseList.add(reimburse);
-		reimburse = new Reimbursement(6, Reimbursement.ReimbursementType.UNIVERSITY_COURSES, 200.00,
+		reimburse = new Reimbursement(6, realUser.getUsername(), Reimbursement.ReimbursementType.UNIVERSITY_COURSES, 200.00,
 				Reimbursement.ReimbursementStatus.PEND_DS, LocalDate.now(), LocalDate.now());
 		reimburseList.add(reimburse);
 
@@ -169,12 +169,12 @@ public class ReimbursementDaoTest {
 
 		reimburseDao.setConnection(conn);
 		
-		reimburseDao.createReimbursement(reimburseList.get(0), realUser);
-		reimburseDao.createReimbursement(reimburseList.get(1), realUser);
-		reimburseDao.createReimbursement(reimburseList.get(2), realUser);
-		reimburseDao.createReimbursement(reimburseList.get(3), realUser);
-		reimburseDao.createReimbursement(reimburseList.get(4), realUser);
-		reimburseDao.createReimbursement(reimburseList.get(5), realUser);
+		reimburseDao.createReimbursement(reimburseList.get(0));
+		reimburseDao.createReimbursement(reimburseList.get(1));
+		reimburseDao.createReimbursement(reimburseList.get(2));
+		reimburseDao.createReimbursement(reimburseList.get(3));
+		reimburseDao.createReimbursement(reimburseList.get(4));
+		reimburseDao.createReimbursement(reimburseList.get(5));
 	}
 
 	@After
@@ -189,24 +189,19 @@ public class ReimbursementDaoTest {
 
 	@Test(expected = NullPointerException.class)
 	public void createReimburseNullReimbursement() {
-		reimburseDao.createReimbursement(null, realUser);
-	}
-
-	@Test(expected = NullPointerException.class)
-	public void createReimburseNullUser() {
-		reimburseDao.createReimbursement(reimburseList.get(1), null);
+		reimburseDao.createReimbursement(null);
 	}
 
 	@Test
 	public void createReimburseExisting() {
-		assertFalse(reimburseDao.createReimbursement(reimburseList.get(0), realUser));
+		assertFalse(reimburseDao.createReimbursement(reimburseList.get(0)));
 	}
 
 	@Test
 	public void createReimburseNew() {
-		Reimbursement reimburse = new Reimbursement(7, Reimbursement.ReimbursementType.CERTIFICATION, 200.00,
+		Reimbursement reimburse = new Reimbursement(7, realUser.getUsername(),  Reimbursement.ReimbursementType.CERTIFICATION, 200.00,
 				Reimbursement.ReimbursementStatus.PEND_DS, LocalDate.now(), LocalDate.now());
-		assertTrue(reimburseDao.createReimbursement(reimburse, realUser));
+		assertTrue(reimburseDao.createReimbursement(reimburse));
 		assertTrue(reimburseDao.deleteReimbursementById(reimburse.getId()));
 	}
 
@@ -233,7 +228,7 @@ public class ReimbursementDaoTest {
 
 	@Test
 	public void updateReimburseDoesNotExist() {
-		Reimbursement reimburse = new Reimbursement(-1, Reimbursement.ReimbursementType.CERTIFICATION, 200.00,
+		Reimbursement reimburse = new Reimbursement(-1, fakeUser.getUsername(), Reimbursement.ReimbursementType.CERTIFICATION, 200.00,
 				Reimbursement.ReimbursementStatus.PEND_DS, LocalDate.now(), LocalDate.now());
 		assertFalse(reimburseDao.updateReimbursement(reimburse));
 	}
@@ -261,7 +256,7 @@ public class ReimbursementDaoTest {
 	@Test
 	public void deleteReimburseExists() {
 		assertTrue(reimburseDao.deleteReimbursementById(reimburseList.get(0).getId()));
-		assertTrue(reimburseDao.createReimbursement(reimburseList.get(0), realUser));
+		assertTrue(reimburseDao.createReimbursement(reimburseList.get(0)));
 	}
 
 	@Test
