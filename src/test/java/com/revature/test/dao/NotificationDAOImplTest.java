@@ -4,6 +4,7 @@ import static org.junit.Assert.*;
 
 import java.sql.Date;
 import java.time.LocalDate;
+import java.util.ArrayList;
 
 import org.junit.After;
 import org.junit.AfterClass;
@@ -49,5 +50,25 @@ public class NotificationDAOImplTest {
 	public void getNotificationNull() {
 		assertEquals(null, notifDao.getNotification(-1));
 	}
+	
+	@Test
+	public void getAllNotificationByUserSuccess() {
+		User user = new User("testuser", "password", "test", "user", Role.EMPLOYEE);
+		ArrayList<Notification> expect = new ArrayList<>();
+		User uesr = new User("testuser", "password", "test", "user", Role.EMPLOYEE);
+		LocalDate date = new Date("2019-10-27").toLocalDate();
+		expect.add(new Notification("some msg", user, new Date("2019-10-20").toLocalDate()))
+	}
 
 }
+
+
+
+
+
+
+
+
+
+
+
