@@ -56,10 +56,22 @@ public class NotificationDAOImplTest {
 		User user = new User("testuser", "password", "test", "user", Role.EMPLOYEE);
 		ArrayList<Notification> expect = new ArrayList<>();
 		User uesr = new User("testuser", "password", "test", "user", Role.EMPLOYEE);
-		LocalDate date = new Date("2019-10-27").toLocalDate();
-		expect.add(new Notification("some msg", user, new Date("2019-10-20").toLocalDate()))
+		LocalDate date = new Date(2019-1900, 9, 20).toLocalDate();
+		expect.add(new Notification("some msg", user, date, 1, user, NotificationStatus.NEW));
+		expect.add(new Notification("msg1", user, date, 1, user, NotificationStatus.UNREAD));
+		assertEquals(expect,(ArrayList<Notification>) notifDao.getAllNotificationsByUser(user));
 	}
-
+	
+	@Test
+	public void getAllNotificationByUserNullUser() {
+		assertEquals(null, notifDao.getAllNotificationsByUser(null));
+	}
+	
+	@Test
+	public void getAllNotificationByUserZeroNotif() {
+		User user = new User("example", "password", "exapmle", "user", Role.EMPLOYEE);
+		assertEquals(new ArrayList<Notification>(), notifDao.getAllNotificationsByUser(user));
+	}
 }
 
 
