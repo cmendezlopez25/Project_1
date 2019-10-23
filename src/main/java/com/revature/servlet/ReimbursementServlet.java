@@ -1,6 +1,7 @@
 package com.revature.servlet;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -33,15 +34,16 @@ public class ReimbursementServlet extends HttpServlet {
 		}
 
 		ObjectMapper om = new ObjectMapper();
-		
+
+		List<List<Reimbursement>> allReimbursements = new ArrayList<List<Reimbursement>>();
 		User user = (User)session.getAttribute("user");
-		List<Reimbursement> listReimburse = reimburseService.getReimbursementsByUser(user);
-		response.getWriter().write(om.writeValueAsString(listReimburse));
+		allReimbursements.add(reimburseService.getReimbursementsByUser(user));
 		
 		if (user.getRole() != User.Role.EMPLOYEE) {
-			listReimburse = reimburseService.getReimbursementsForSupervisor(user);
-			response.getWriter().write(om.writeValueAsString(listReimburse));
+			allReimbursements.add(reimburseService.getReimbursementsForSupervisor(user));
 		}
+
+		response.getWriter().write(om.writeValueAsString(allReimbursements));
 	}
 
 	/**

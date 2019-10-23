@@ -1,22 +1,28 @@
-
-let appReimbList = [
-    new Reimbursement(1, "UNIVERSITY_COURSES", 100, "PEND_DS", "07/12/2019", "07/13/2019", "empolyee one"),
-    new Reimbursement(2, "SEMINARS", 50, "PEND_BENCO", "08/03/2019", "08/09/2019", "veryveryvery loneanme"), 
-    new Reimbursement(3, "SEMINARS", 80, "PEND_BENCO", "09/03/2019", "09/09/2019", "employee two"), 
-];
-
 $(document).ready(function() {
     getAllApprovalReimbursement()
-    displayApprovalReimbursement(appReimbList);
 });
 
 function getAllApprovalReimbursement(){
-
+    let xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState === 4) {
+            if (xhr.status === 200) {
+                reimbList = JSON.parse(xhr.responseText)
+                displayApprovalReimbursement(reimbList[1]);
+            } else {
+                console.log("status != 200");
+            }
+        } else {
+            console.log("Fetching reimbursements");
+        }
+    }
+    xhr.open("GET", "reimbursement", true);
+    xhr.send();
 }
 
 function displayApprovalReimbursement(appReimbList) {
     let list = document.getElementById("employ-reimb-list");
-
+    console.log(appReimbList);
     list.innerHTML = "";
     console.log('displaying approval reimbursement table');
     for(r of appReimbList) {
@@ -31,7 +37,8 @@ function displayApprovalReimbursement(appReimbList) {
         let amtCol = document.createElement('td');
         amtCol.innerHTML = r.amount;
         let createCol = document.createElement('td');
-        createCol.innerHTML = r.dateCreated;
+        let dateCreated = r.dateCreated.monthValue + "/" + r.dateCreated.dayOfMonth + "/" + r.dateCreated.year;
+        createCol.innerHTML = dateCreated;
         let modifyCol = document.createElement('td');
         modifyCol.innerHTML = r.employeeName;
         tableRow.appendChild(idCol);
