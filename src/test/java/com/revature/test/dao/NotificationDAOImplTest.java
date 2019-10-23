@@ -43,14 +43,15 @@ public class NotificationDAOImplTest {
 		User sender = new User("testuser", "password", "test", "user", Role.EMPLOYEE);
 		User receiver = new User("testuser", "password", "test", "user", Role.EMPLOYEE);
 		Notification expect = new Notification("some msg", sender, LocalDate.parse("2019-10-20"), 1, receiver, NotificationStatus.NEW);
-		assertEquals(expect, notifDao.getNotification(5));
+		assertEquals(expect, notifDao.getNotificationById(5));
 	}
 	
 	@Test
 	public void getNotificationNull() {
-		assertEquals(null, notifDao.getNotification(-1));
+		assertEquals(null, notifDao.getNotificationById(-1));
 	}
 	
+	// may fail due to change in notification DB
 	@Test
 	public void getAllNotificationByUserSuccess() {
 		User user = new User("testuser", "password", "test", "user", Role.EMPLOYEE);
@@ -70,6 +71,18 @@ public class NotificationDAOImplTest {
 	public void getAllNotificationByUserZeroNotif() {
 		User user = new User("example", "password", "exapmle", "user", Role.EMPLOYEE);
 		assertEquals(new ArrayList<Notification>(), notifDao.getAllNotificationsByUser(user));
+	}
+	
+	@Test
+	public void createNotificationSuccess() {
+		User user = new User("testuser", "password", "test", "user", Role.EMPLOYEE);
+		Notification newNotif = new Notification("testAddNotif", user, new Date(2019-1900, 9, 23).toLocalDate(), 1, user, NotificationStatus.NEW);
+		assertTrue(notifDao.createNotification(newNotif));
+	}
+	
+	@Test(expected=NullPointerException.class)
+	public void createNotificationNull() {
+		notifDao.createNotification(null);
 	}
 }
 
