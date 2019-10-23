@@ -7,8 +7,9 @@ function validateLogin(){
         if (xhr.readyState === 4) {
             if (xhr.status === 404) {
                 // User was not found or password was incorrect
-                let invalidUser = document.getElementById("invalid-user");
-                invalidUser.setAttribute("style", "color: red; display: inline;");
+                let invalidUser = document.getElementById("invalid-msg");
+                invalidUser.setAttribute("class", "invalid-msg-show");
+                console.log(invalidUser);
             }
             /// User and password correct!
             else if(xhr.status === 200){
