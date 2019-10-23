@@ -265,14 +265,13 @@ label>span {
 }
 
 .invalid-msg-hide {
-  opacity: 0;
-  border: red 2px solid;
-  color: red;
+  display: none;
 }
 
 .invalid-msg-show {
-  opacity: 1;
-  border: red 2px solid;
+  display: inline-block;
+  font-family: Raleway-Medium;
+  font-size: 18px;
   color: red;
   padding:5px;
   margin: 5px;
