@@ -12,6 +12,7 @@ public class Reimbursement {
 	}
 
 	private int id;
+	private String ownerUserName;
 	private ReimbursementType type;
 	private double amount;
 	private ReimbursementStatus status;
@@ -58,6 +59,14 @@ public class Reimbursement {
 
 	public void setDateCreated(LocalDate dateCreated) {
 		this.dateCreated = dateCreated;
+	}
+
+	public String getOwnerUserName() {
+		return ownerUserName;
+	}
+
+	public void setOwnerUserName(String ownerUserName) {
+		this.ownerUserName = ownerUserName;
 	}
 
 	public LocalDate getDateLastModified() {

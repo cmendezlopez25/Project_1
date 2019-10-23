@@ -18,6 +18,7 @@ $(document).ready(function() {
     
     displayAnnouncement(annList);
     displayNotification(annList);
+    
     $('.reimb-row').click(function () {
         getReimbursementById($(this));
     });
@@ -76,6 +77,7 @@ function getAllReimbursement() {
 
 function getReimbursementById(node) {
     let id = node.children().first().html();
+    console.log(id);
     let xhr = new XMLHttpRequest();
     xhr.onreadystatechange = function() {
         if (xhr.readyState === 4) {

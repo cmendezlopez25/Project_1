@@ -28,7 +28,7 @@ public class UserDAOImpl implements UserDAO {
 	@Override
 	public User readUser(String username) {
 		User user = null;
-		String query = "select * from users where username= ?";
+		String query = "select * from users where username = ?";
 		try {
 			PreparedStatement stmt = conn.prepareStatement(query);
 			stmt.setString(1, username);
