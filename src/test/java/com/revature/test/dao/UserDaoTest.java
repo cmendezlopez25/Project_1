@@ -26,7 +26,8 @@ import com.revature.util.ConnectionFactory;
 public class UserDaoTest {
 	
 	private UserDAOImpl userDao = new UserDAOImpl();
-	private String query = "select * from \"Users\" where \"username\"= ?";
+	String schema = "proj1_test";
+	String query = "select * from users where username= ?";
 
 	@Mock
 	Connection conn;
@@ -34,9 +35,10 @@ public class UserDaoTest {
 	@Spy
 	PreparedStatement stmt;
 	{
-		
 		try {
-			stmt = ConnectionFactory.getConnection().prepareStatement(query);
+			Connection tempConnection = ConnectionFactory.getConnection();
+			tempConnection.setSchema(schema);
+			stmt = tempConnection.prepareStatement(query);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

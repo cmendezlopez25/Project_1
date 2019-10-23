@@ -264,6 +264,20 @@ label>span {
   padding:5px;
 }
 
+.invalid-msg-hide {
+  display: none;
+}
+
+.invalid-msg-show {
+  display: inline-block;
+  font-family: Raleway-Medium;
+  font-size: 18px;
+  color: red;
+  padding:5px;
+  margin: 5px;
+}
+
+
 
 /*==================================================================
 [ Form ]*/
