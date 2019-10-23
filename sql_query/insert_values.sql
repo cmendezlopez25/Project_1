@@ -23,3 +23,6 @@ values('5', 'TECHNICAL_TRAINING', 200.00, 'PEND_DS', current_date, current_date,
 
 insert into reimbursement(id, type, amount, status, datecreated, datelastmodified, owner)
 values('6', 'OTHER', 200.00, 'PEND_DS', current_date, current_date, 'testuser');
+
+insert into reimbursement(id, type, amount, status, datecreated, datelastmodified, owner)
+values('7', 'CERTIFICATION', 500.00, 'PEND_DS', current_date, current_date, 'supervisor');

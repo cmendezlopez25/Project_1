@@ -1,9 +1,5 @@
 
-let reimbList = [
-    //new Reimbursement(1, "UNIVERSITY_COURSES", 100, "PEND_DS", "07/12/2019", "07/13/2019"),
-    //new Reimbursement(2, "SEMINARS", 50, "PEND_BENCO", "08/03/2019", "08/09/2019"), 
-    //new Reimbursement(3, "SEMINARS", 80, "PEND_BENCO", "09/03/2019", "09/09/2019"), 
-];
+let reimbList = [];
 
 let annList = [
     new Announcement("first read msg", "you supervisor", "07/13/2019", 2, "READ"),
@@ -14,8 +10,6 @@ let annList = [
 
 $(document).ready(function() {
     getAllReimbursement();
-    //displayReimbursements(reimbList);     // just for test, uncomment the line above when got servlet
-    
     displayAnnouncement(annList);
     displayNotification(annList);
     
@@ -28,7 +22,7 @@ $(document).ready(function() {
 function displayReimbursements(reimbList) {
     let list = document.getElementById("reimb-list");
     console.log("displaying reimbursement table")
-    console.log(reimbList);
+    
     list.innerHTML = "";
     for (r of reimbList) {
         let tableRow = document.createElement("tr");
@@ -63,7 +57,7 @@ function getAllReimbursement() {
         if (xhr.readyState === 4) {
             if (xhr.status === 200) {
                 reimbList = JSON.parse(xhr.responseText)
-                displayReimbursements(reimbList);
+                displayReimbursements(reimbList[0]);
             } else {
                 console.log("status != 200");
             }
