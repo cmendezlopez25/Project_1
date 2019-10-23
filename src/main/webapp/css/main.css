@@ -264,11 +264,20 @@ label>span {
   padding:5px;
 }
 
-#invalid-user {
-  display: none;
+.invalid-msg-hide {
+  opacity: 0;
+  border: red 2px solid;
   color: red;
-  text-align: center;
 }
+
+.invalid-msg-show {
+  opacity: 1;
+  border: red 2px solid;
+  color: red;
+  padding:5px;
+  margin: 5px;
+}
+
 
 
 /*==================================================================
