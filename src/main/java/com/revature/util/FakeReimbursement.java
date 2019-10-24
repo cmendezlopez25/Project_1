@@ -11,6 +11,8 @@ public class FakeReimbursement {
 	private ReimbursementStatus status;
 	private String dateCreated;
 	private String dateLastModified;
+	private String message;
+	private int passGrade;
 
 	public int getId() {
 		return id;
@@ -68,8 +70,24 @@ public class FakeReimbursement {
 		this.dateLastModified = dateLastModified;
 	}
 
+	public String getMessage() {
+		return message;
+	}
+
+	public void setMessage(String message) {
+		this.message = message;
+	}
+
+	public int getPassGrade() {
+		return passGrade;
+	}
+
+	public void setPassGrade(int passGrade) {
+		this.passGrade = passGrade;
+	}
+
 	public FakeReimbursement(int id, String ownerUserName, ReimbursementType type, double amount,
-			ReimbursementStatus status, String dateCreated, String dateLastModified) {
+			ReimbursementStatus status, String dateCreated, String dateLastModified, String message, int passGrade) {
 		super();
 		this.id = id;
 		this.ownerUserName = ownerUserName;
@@ -78,6 +96,8 @@ public class FakeReimbursement {
 		this.status = status;
 		this.dateCreated = dateCreated;
 		this.dateLastModified = dateLastModified;
+		this.message = message;
+		this.passGrade = passGrade;
 	}
 
 	public FakeReimbursement() {
