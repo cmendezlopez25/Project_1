@@ -4,9 +4,11 @@ import static org.junit.Assert.*;
 import static org.mockito.Mockito.when;
 
 import java.io.File;
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 import org.junit.After;
@@ -102,17 +104,30 @@ public class ReimbursementServiceTest {
 
 	@Test(expected = NullPointerException.class)
 	public void createReimbursementNullReimbursement() {
-		reimburseService.createReimbursement(null);
+		reimburseService.createReimbursement(null, new ArrayList<File>());
+	}
+
+	@Test(expected = NullPointerException.class)
+	public void createReimbursementNullAttachments() {
+		reimburseService.createReimbursement(reimburseList.get(0), null);
 	}
 	
 	@Test
 	public void createReimbursementExisting() {
-		assertFalse(reimburseService.createReimbursement(reimburseList.get(0)));
+		assertFalse(reimburseService.createReimbursement(reimburseList.get(0), new ArrayList<File>()));
 	}
 	
 	@Test
 	public void createReimbursementNew() {
-		assertTrue(reimburseService.createReimbursement(reimburseList.get(1)));
+		allFiles = new ArrayList<File>();
+		File tempFile = new File(folderPath + "SomeFile.txt");
+		try {
+			tempFile.createNewFile();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		allFiles.add(tempFile);
+		assertTrue(reimburseService.createReimbursement(reimburseList.get(1), allFiles));
 	}
 	
 	@Test
@@ -194,5 +209,23 @@ public class ReimbursementServiceTest {
 	@Test
 	public void getAllAttachmentsByIdExists() {
 		assertEquals("Should return " + allFiles.toString(), allFiles, reimburseService.getReimbursementAttachmentsById(1));
+	}
+	
+	@Test(expected = NullPointerException.class)
+	public void addAttachmentsNull() {
+		reimburseService.addAttachmentsToReimbursementById(0, null);
+	}
+	
+	@Test
+	public void addAttachmentsNew() {
+		allFiles = new ArrayList<File>();
+		File tempFile = new File(folderPath + "SomeFile.txt");
+		try {
+			tempFile.createNewFile();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		allFiles.add(tempFile);
+		assertTrue(reimburseService.addAttachmentsToReimbursementById(-1, allFiles));
 	}
 }

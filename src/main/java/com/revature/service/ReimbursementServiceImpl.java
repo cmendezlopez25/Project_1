@@ -1,5 +1,7 @@
 package com.revature.service;
 
+import static com.revature.util.LoggerUtil.log;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -16,12 +18,12 @@ public class ReimbursementServiceImpl implements ReimbursementService {
 	private String folderPath = "../../resources/";
 
 	@Override
-	public boolean createReimbursement(Reimbursement reimburse) {
-		if (reimburse == null) {
+	public boolean createReimbursement(Reimbursement reimburse, List<File> attachments) {
+		if (reimburse == null || attachments == null) {
 			throw new NullPointerException();
 		}
 		
-		if(reimburseDao.createReimbursement(reimburse) == true) {
+		if(reimburseDao.createReimbursement(reimburse) == true && addAttachmentsToReimbursementById(reimburse.getId(), attachments)) {
 			return true;
 		}
 		
@@ -72,6 +74,31 @@ public class ReimbursementServiceImpl implements ReimbursementService {
 	@Override
 	public List<Reimbursement> getAllReimbursements() {
 		return reimburseDao.getAllReimbursements();
+	}
+	
+	public boolean addAttachmentsToReimbursementById(int id, List<File> attachments) {
+		if (attachments == null) {
+			throw new NullPointerException();
+		}
+		
+		log.debug(folderPath);
+		
+		String fullPath = folderPath + id + "/";
+		File directory = new File(fullPath);
+		if (!directory.exists()) {
+			directory.mkdir();
+		}
+		
+		for (File file : attachments) {
+			String fullFileName = fullPath + file.getName();
+			if (file.renameTo(new File(fullFileName)) == false) {
+				File existingFile = new File(fullFileName);
+				existingFile.delete();
+				file.renameTo(new File(fullFileName));
+			}
+		}
+		
+		return true;
 	}
 	
 	public List<File> getReimbursementAttachmentsById(int id){
