@@ -121,15 +121,14 @@ public class NotificationDAOImpl implements NotificationDAO {
 	}
 
 	@Override
-	public List<Notification> getNewUnreadNotificationByUser(User user) throws NullPointerException {
+	public List<Notification> getNewNotificationByUser(User user) throws NullPointerException {
 		if (user == null) throw new NullPointerException();
-		String query = "SELECT * FROM notification WHERE receiver = ? AND (status = ? or status = ?);";
+		String query = "SELECT * FROM notification WHERE receiver = ? AND status = ?;";
 		ArrayList<Notification> notifList = new ArrayList<Notification>();
 		try {
 			PreparedStatement stmt = conn.prepareStatement(query);
 			stmt.setString(1, user.getUsername());
 			stmt.setString(2, NotificationStatus.NEW.name());
-			stmt.setString(3, NotificationStatus.UNREAD.name());
 			ResultSet res = stmt.executeQuery();
 			while (res.next()) {
 				notifList.add(getSingleNotifByResultSet(res));

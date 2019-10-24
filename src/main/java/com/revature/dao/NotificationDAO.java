@@ -13,6 +13,6 @@ public interface NotificationDAO {
 	public boolean deleteNotificationById(int id);
 	public List<Notification> getAllNotifications();
 	public List<Notification> getAllNotificationsByUser(User user);
-	public List<Notification> getNewUnreadNotificationByUser(User user);
+	public List<Notification> getNewNotificationByUser(User user);
 	public List<Notification> getAllNotificationsForSupervisor(User user);
 }
