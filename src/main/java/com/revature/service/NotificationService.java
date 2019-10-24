@@ -12,5 +12,6 @@ public interface NotificationService {
 	public boolean updateNotification(Notification reimburse);  // dont
 	public boolean deleteNotificationById(int id);				// dont
 	public List<Notification> getNotificationsByUser(User user);
+	public List<Notification> getNewUnreadNotificationByUser(User user);
 	public List<Notification> getAllNotifications();			// dont
 }

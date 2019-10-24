@@ -10,8 +10,9 @@ let annList = [
 
 $(document).ready(function() {
     getAllReimbursement();
-    displayAnnouncement(annList);
-    displayNotification(annList);
+    getAllAnnouncement();
+    // displayAnnouncement(annList);
+    // displayNotification(annList);
     
     $('.reimb-row').click(function () {
         getReimbursementById($(this));
@@ -93,7 +94,9 @@ function getAllAnnouncement() {
     xhr.onreadystatechange = function() {
         if (xhr.readyState === 4) {
             if (xhr.status === 200) {
-                displayAnnouncement(JSON.parse(xhr.responseText));
+                announceList = JSON.parse(xhr.responseText)
+                displayAnnouncement(announceList[0]);
+                displayNotification(announceList[1]);
             } else {
                 console.log("status != 200");
             }
@@ -101,7 +104,7 @@ function getAllAnnouncement() {
             console.log("Fetching reimbursements");
         }
     }
-    xhr.open("GET", "home", true);
+    xhr.open("GET", "notification", true);
     xhr.send();
 }
 
@@ -112,13 +115,18 @@ function displayAnnouncement(announceList) {
     list.innerHTML = "";
 
     for(a of announceList) {
-        // check if the notification is reader not
-        if(a.status === "READ") {
-            let item = document.createElement("li");
+        let item = document.createElement("li");
+        console.log(a);
+        if (a.status == "NEW") continue
+        if (a.status == "UNREAD") { 
+            console.log("unread");
+            item.setAttribute("class", "list-group-item announcement unread");
+        } 
+        else {
             item.setAttribute("class", "list-group-item announcement");
-            item.innerHTML = a.msg;
-            list.appendChild(item);
         }
+        item.innerHTML = a.msg;
+        list.appendChild(item);
     }
 }
 
@@ -145,12 +153,9 @@ function displayNotification(notifList) {
     list.innerHTML = "";
     console.log('displaying notification');
     for(n of notifList) {
-        // check if the notification is reader not
-        if(n.status !== "READ") {
-            let item = document.createElement("li");
-            item.setAttribute("class", "list-group-item notification");
-            item.innerHTML = n.msg;
-            list.appendChild(item);
-        }
+        let item = document.createElement("li");
+        item.setAttribute("class", "list-group-item notification unread");
+        item.innerHTML = n.msg;
+        list.appendChild(item);
     }
 }
