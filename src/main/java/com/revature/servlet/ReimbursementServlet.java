@@ -75,11 +75,11 @@ public class ReimbursementServlet extends HttpServlet {
 		log.debug(reimburse);
 		String attachments = request.getReader().readLine();
 		log.debug(attachments);
-		List<File> allAttachments = om.readValue(attachments, List.class);
+		List<File> allAttachments = new ArrayList<File>();//om.readValue(attachments, List.class);
 		
-		if (allAttachments == null) {
-			allAttachments = new ArrayList<File>();
-		}
+		//if (allAttachments == null) {
+			//allAttachments = new ArrayList<File>();
+		//}
 		
 		reimburseService.createReimbursement(reimburse, allAttachments);
 	}
