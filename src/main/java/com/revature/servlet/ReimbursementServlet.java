@@ -64,13 +64,14 @@ public class ReimbursementServlet extends HttpServlet {
 		
 		FakeReimbursement fake = om.readValue(reimbursement, FakeReimbursement.class);
 		Reimbursement reimburse = new Reimbursement();
-		reimburse.setId(fake.getId());
-		reimburse.setOwnerUserName(fake.getOwnerUserName());
+		reimburse.setOwnerUserName(((User)(request.getSession().getAttribute("user"))).getUsername());
 		reimburse.setType(fake.getType());
 		reimburse.setAmount(fake.getAmount());
 		reimburse.setStatus(fake.getStatus());
 		reimburse.setDateCreated(LocalDate.parse(fake.getDateCreated(), DateTimeFormatter.ofPattern("MM-dd-yyyy")));
 		reimburse.setDateLastModified(LocalDate.parse(fake.getDateLastModified(), DateTimeFormatter.ofPattern("MM-dd-yyyy")));
+		reimburse.setMessage(fake.getMessage());
+		reimburse.setPassGrade(fake.getPassGrade());
 		
 		log.debug(reimburse);
 		String attachments = request.getReader().readLine();
