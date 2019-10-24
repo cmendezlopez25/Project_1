@@ -39,7 +39,7 @@ public class ReimbursementDaoTest {
 	private User supervisorUser;
 
 	private String schemaName = "proj1_test";
-	private String createSql = "insert into reimbursement(id, type, amount, status, datecreated, datelastmodified, \"owner\") values(?, ?, ?, ?, ?, ?, ?)";
+	private String createSql = "insert into reimbursement(type, amount, status, datecreated, datelastmodified, \"owner\", message, passgrade) values(?, ?, ?, ?, ?, ?, ?, ?)";
 	private String readOneSql = "select * from reimbursement where id=?";
 	private String updateSql = "update reimbursement set amount=?, status=?, datelastmodified=? where id=?";
 	private String deleteSql = "delete from reimbursement where id=?";
@@ -141,22 +141,22 @@ public class ReimbursementDaoTest {
 		supervisorUser.setRole(User.Role.DEPARTMENT_HEAD);
 
 		Reimbursement reimburse = new Reimbursement(1, realUser.getUsername(), Reimbursement.ReimbursementType.CERTIFICATION, 200.00,
-				Reimbursement.ReimbursementStatus.PEND_DS, LocalDate.now(), LocalDate.now());
+				Reimbursement.ReimbursementStatus.PEND_DS, LocalDate.now(), LocalDate.now(), "Java OCA", 65);
 		reimburseList.add(reimburse);
 		reimburse = new Reimbursement(2, realUser.getUsername(), Reimbursement.ReimbursementType.CERTIFICATION_PREPARATION_CLASSES, 200.00,
-				Reimbursement.ReimbursementStatus.PEND_DS, LocalDate.now(), LocalDate.now());
+				Reimbursement.ReimbursementStatus.PEND_DS, LocalDate.now(), LocalDate.now(), "Almost Java class", 60);
 		reimburseList.add(reimburse);
 		reimburse = new Reimbursement(3, realUser.getUsername(), Reimbursement.ReimbursementType.OTHER, 200.00,
-				Reimbursement.ReimbursementStatus.PEND_DS, LocalDate.now(), LocalDate.now());
+				Reimbursement.ReimbursementStatus.PEND_DS, LocalDate.now(), LocalDate.now(), "Something Useful", 0);
 		reimburseList.add(reimburse);
 		reimburse = new Reimbursement(4, realUser.getUsername(), Reimbursement.ReimbursementType.SEMINARS, 200.00,
-				Reimbursement.ReimbursementStatus.PEND_DS, LocalDate.now(), LocalDate.now());
+				Reimbursement.ReimbursementStatus.PEND_DS, LocalDate.now(), LocalDate.now(), "Angular Debacle", 0);
 		reimburseList.add(reimburse);
 		reimburse = new Reimbursement(5, realUser.getUsername(), Reimbursement.ReimbursementType.TECHNICAL_TRAINING, 200.00,
-				Reimbursement.ReimbursementStatus.PEND_DS, LocalDate.now(), LocalDate.now());
+				Reimbursement.ReimbursementStatus.PEND_DS, LocalDate.now(), LocalDate.now(), "Computer Hardware", 50);
 		reimburseList.add(reimburse);
 		reimburse = new Reimbursement(6, realUser.getUsername(), Reimbursement.ReimbursementType.UNIVERSITY_COURSES, 200.00,
-				Reimbursement.ReimbursementStatus.PEND_DS, LocalDate.now(), LocalDate.now());
+				Reimbursement.ReimbursementStatus.PEND_DS, LocalDate.now(), LocalDate.now(), "Science class", 80);
 		reimburseList.add(reimburse);
 
 		when(conn.prepareStatement(createSql)).thenReturn(createStmt);
@@ -200,7 +200,7 @@ public class ReimbursementDaoTest {
 	@Test
 	public void createReimburseNew() {
 		Reimbursement reimburse = new Reimbursement(7, realUser.getUsername(),  Reimbursement.ReimbursementType.CERTIFICATION, 200.00,
-				Reimbursement.ReimbursementStatus.PEND_DS, LocalDate.now(), LocalDate.now());
+				Reimbursement.ReimbursementStatus.PEND_DS, LocalDate.now(), LocalDate.now(), "Another thing", 70);
 		assertTrue(reimburseDao.createReimbursement(reimburse));
 		assertTrue(reimburseDao.deleteReimbursementById(reimburse.getId()));
 	}
@@ -229,7 +229,7 @@ public class ReimbursementDaoTest {
 	@Test
 	public void updateReimburseDoesNotExist() {
 		Reimbursement reimburse = new Reimbursement(-1, fakeUser.getUsername(), Reimbursement.ReimbursementType.CERTIFICATION, 200.00,
-				Reimbursement.ReimbursementStatus.PEND_DS, LocalDate.now(), LocalDate.now());
+				Reimbursement.ReimbursementStatus.PEND_DS, LocalDate.now(), LocalDate.now(), "Fake Message", 0);
 		assertFalse(reimburseDao.updateReimbursement(reimburse));
 	}
 

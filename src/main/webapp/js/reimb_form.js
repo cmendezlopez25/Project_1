@@ -13,10 +13,10 @@ function createReimbursement(){
     reimbursement.id = document.getElementById("reimb-id").innerHTML;
     reimbursement.dateCreated = reimbursement.dateLastModified = document.getElementById("create-date").innerHTML;
     reimbursement.type = document.getElementById("inputState").value.toUpperCase();
-    console.log(reimbursement.type);
-    //reimbursement.message
+    reimbursement.message = document.getElementById("comment").value;
     reimbursement.amount = document.getElementById("amount").value;
     reimbursement.status = "PEND_DS";
+    //reimbursement.passgrade = document.getElementById("passGrade").value;
     if (inputValidation(reimbursement)){
         let xhr = new XMLHttpRequest();
 

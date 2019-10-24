@@ -30,6 +30,8 @@ CREATE TABLE reimbursement (
 	datecreated timestamp NOT NULL,
 	datelastmodified timestamp NOT NULL,
 	"owner" text NULL,
+	message text null,
+	passgrade numeric null,
 	CONSTRAINT reimbursement_pk PRIMARY KEY (id),
 	CONSTRAINT reimbursement_fk FOREIGN KEY ("owner") REFERENCES users(username) ON DELETE SET NULL
 );

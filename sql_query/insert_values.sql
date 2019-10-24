@@ -6,23 +6,23 @@ values(1, 'testuser', 'password', 'Test', 'User', 'EMPLOYEE', 'supervisor');
 
 select id, type, amount, status, datecreated, datelastmodified from reimbursement where "owner" in (select username from users where supervisor = 'supervisor');
 
-insert into reimbursement(id, type, amount, status, datecreated, datelastmodified, owner)
-values('1', 'UNIVERSITY_COURSES', 200.00, 'PEND_DS', current_date, current_date, 'testuser');
+insert into reimbursement(id, type, amount, status, datecreated, datelastmodified, owner, message, passgrade)
+values('1', 'UNIVERSITY_COURSES', 200.00, 'PEND_DS', current_date, current_date, 'testuser', 'Science class', 80);
 
-insert into reimbursement(id, type, amount, status, datecreated, datelastmodified, owner)
-values('2', 'SEMINARS', 200.00, 'PEND_DS', current_date, current_date, 'testuser');
+insert into reimbursement(id, type, amount, status, datecreated, datelastmodified, owner, message, passgrade)
+values('2', 'SEMINARS', 200.00, 'PEND_DS', current_date, current_date, 'testuser', 'Angular Debacle', null);
 
-insert into reimbursement(id, type, amount, status, datecreated, datelastmodified, owner)
-values('3', 'CERTIFICATION_PREPARATION_CLASSES', 200.00, 'PEND_DS', current_date, current_date, 'testuser');
+insert into reimbursement(id, type, amount, status, datecreated, datelastmodified, owner, message, passgrade)
+values('3', 'CERTIFICATION_PREPARATION_CLASSES', 200.00, 'PEND_DS', current_date, current_date, 'testuser', 'Almost Java class', 60);
 
-insert into reimbursement(id, type, amount, status, datecreated, datelastmodified, owner)
-values('4', 'CERTIFICATION', 200.00, 'PEND_DS', current_date, current_date, 'testuser');
+insert into reimbursement(id, type, amount, status, datecreated, datelastmodified, owner, message, passgrade)
+values('4', 'CERTIFICATION', 200.00, 'PEND_DS', current_date, current_date, 'testuser', 'Java OCA', 65);
 
-insert into reimbursement(id, type, amount, status, datecreated, datelastmodified, owner)
-values('5', 'TECHNICAL_TRAINING', 200.00, 'PEND_DS', current_date, current_date, 'testuser');
+insert into reimbursement(id, type, amount, status, datecreated, datelastmodified, owner, message, passgrade)
+values('5', 'TECHNICAL_TRAINING', 200.00, 'PEND_DS', current_date, current_date, 'testuser', 'Computer Hardware', 50);
 
-insert into reimbursement(id, type, amount, status, datecreated, datelastmodified, owner)
-values('6', 'OTHER', 200.00, 'PEND_DS', current_date, current_date, 'testuser');
+insert into reimbursement(id, type, amount, status, datecreated, datelastmodified, owner, message, passgrade)
+values('6', 'OTHER', 200.00, 'PEND_DS', current_date, current_date, 'testuser', 'Something Useful', null);
 
-insert into reimbursement(id, type, amount, status, datecreated, datelastmodified, owner)
-values('7', 'CERTIFICATION', 500.00, 'PEND_DS', current_date, current_date, 'supervisor');
+insert into reimbursement(id, type, amount, status, datecreated, datelastmodified, owner, message, passgrade)
+values('7', 'CERTIFICATION', 500.00, 'PEND_DS', current_date, current_date, 'supervisor', 'Another thing', 70);

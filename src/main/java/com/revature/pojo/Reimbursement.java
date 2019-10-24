@@ -18,6 +18,8 @@ public class Reimbursement {
 	private ReimbursementStatus status;
 	private LocalDate dateCreated;
 	private LocalDate dateLastModified;
+	private String message;
+	private int passGrade;
 
 	public int getId() {
 		return id;
@@ -77,12 +79,29 @@ public class Reimbursement {
 		this.dateLastModified = dateLastModified;
 	}
 
+	public String getMessage() {
+		return message;
+	}
+
+	public void setMessage(String message) {
+		this.message = message;
+	}
+
+	public int getPassGrade() {
+		return passGrade;
+	}
+
+	public void setPassGrade(int passGrade) {
+		this.passGrade = passGrade;
+	}
+
 	public Reimbursement() {
 		super();
 	}
 
 	public Reimbursement(int id, String ownerUserName, ReimbursementType type, double amount,
-			ReimbursementStatus status, LocalDate dateCreated, LocalDate dateLastModified) {
+			ReimbursementStatus status, LocalDate dateCreated, LocalDate dateLastModified, String message,
+			int passGrade) {
 		super();
 		this.id = id;
 		this.ownerUserName = ownerUserName;
@@ -91,6 +110,8 @@ public class Reimbursement {
 		this.status = status;
 		this.dateCreated = dateCreated;
 		this.dateLastModified = dateLastModified;
+		this.message = message;
+		this.passGrade = passGrade;
 	}
 
 	@Override
@@ -103,7 +124,9 @@ public class Reimbursement {
 		result = prime * result + ((dateCreated == null) ? 0 : dateCreated.hashCode());
 		result = prime * result + ((dateLastModified == null) ? 0 : dateLastModified.hashCode());
 		result = prime * result + id;
+		result = prime * result + ((message == null) ? 0 : message.hashCode());
 		result = prime * result + ((ownerUserName == null) ? 0 : ownerUserName.hashCode());
+		result = prime * result + passGrade;
 		result = prime * result + ((status == null) ? 0 : status.hashCode());
 		result = prime * result + ((type == null) ? 0 : type.hashCode());
 		return result;
@@ -132,10 +155,17 @@ public class Reimbursement {
 			return false;
 		if (id != other.id)
 			return false;
+		if (message == null) {
+			if (other.message != null)
+				return false;
+		} else if (!message.equals(other.message))
+			return false;
 		if (ownerUserName == null) {
 			if (other.ownerUserName != null)
 				return false;
 		} else if (!ownerUserName.equals(other.ownerUserName))
+			return false;
+		if (passGrade != other.passGrade)
 			return false;
 		if (status != other.status)
 			return false;
@@ -148,6 +178,6 @@ public class Reimbursement {
 	public String toString() {
 		return "Reimbursement [id=" + id + ", ownerUserName=" + ownerUserName + ", type=" + type + ", amount=" + amount
 				+ ", status=" + status + ", dateCreated=" + dateCreated + ", dateLastModified=" + dateLastModified
-				+ "]";
+				+ ", message=" + message + ", passGrade=" + passGrade + "]";
 	}
 }
