@@ -84,6 +84,18 @@ public class NotificationDAOImplTest {
 	public void createNotificationNull() {
 		notifDao.createNotification(null);
 	}
+	
+	@Test
+	public void getNewUnreadNotifSuccess() {
+		User user = new User("testuser", "password", "test", "user", Role.EMPLOYEE);
+		ArrayList<Notification> expect = new ArrayList<>();
+		LocalDate date1 = new Date(2019-1900, 9, 20).toLocalDate();
+		LocalDate date2 = new Date(2019-1900, 9, 23).toLocalDate();
+		expect.add(new Notification("some msg", user, date1, 1, user, NotificationStatus.NEW));
+		expect.add(new Notification("msg1", user, date1, 1, user, NotificationStatus.UNREAD));
+		expect.add(new Notification("testAddNotif", user, date2, 1, user, NotificationStatus.NEW));
+		assertEquals(expect, notifDao.getNewUnreadNotificationByUser(user));
+	}
 }
 
 
