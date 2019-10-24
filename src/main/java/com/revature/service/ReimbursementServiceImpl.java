@@ -67,7 +67,6 @@ public class ReimbursementServiceImpl implements ReimbursementService {
 		if (user == null) {
 			throw new NullPointerException();
 		}
-		
 		return reimburseDao.getAllReimbursementsForSupervisor(user);
 	}
 

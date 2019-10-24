@@ -51,5 +51,13 @@ public class NotificationServiceImpl implements NotificationService {
 		// dont
 		return null;
 	}
+
+	@Override
+	public List<Notification> getNewUnreadNotificationByUser(User user) throws NullPointerException {
+		if (user == null) {
+			throw new NullPointerException();
+		}
+		return notifDao.getNewNotificationByUser(user);
+	}
 	
 }

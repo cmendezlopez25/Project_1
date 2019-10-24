@@ -120,6 +120,29 @@ public class NotificationDAOImpl implements NotificationDAO {
 		return null;
 	}
 
+	@Override
+	public List<Notification> getNewNotificationByUser(User user) throws NullPointerException {
+		if (user == null) throw new NullPointerException();
+		String query = "SELECT * FROM notification WHERE receiver = ? AND status = ?;";
+		ArrayList<Notification> notifList = new ArrayList<Notification>();
+		try {
+			PreparedStatement stmt = conn.prepareStatement(query);
+			stmt.setString(1, user.getUsername());
+			stmt.setString(2, NotificationStatus.NEW.name());
+			ResultSet res = stmt.executeQuery();
+			while (res.next()) {
+				notifList.add(getSingleNotifByResultSet(res));
+			}
+			return notifList;
+		} catch (SQLException e) {
+			System.out.println("Get New|Unread Notification: Fail to retrieve notif due to SQLExcpetion");
+			e.printStackTrace();
+		}
+		
+		return null;
+	}
+
+	// receive the ResultSet and return a single notification at a time
 	private Notification getSingleNotifByResultSet(ResultSet notifRes) {
 		String query = "";
 		PreparedStatement stmt;
@@ -178,6 +201,7 @@ public class NotificationDAOImpl implements NotificationDAO {
 		}
 		return null;
 	}
+
 }
 
 
