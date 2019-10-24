@@ -1,6 +1,12 @@
 package com.revature.servlet;
 
+import static com.revature.util.LoggerUtil.log;
+
+import java.io.File;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,10 +17,12 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import com.revature.pojo.Reimbursement;
 import com.revature.pojo.User;
 import com.revature.service.ReimbursementService;
 import com.revature.service.ReimbursementServiceImpl;
+import com.revature.util.FakeReimbursement;
 
 /**
  * Servlet implementation class ReimbursementServlet
@@ -50,8 +58,30 @@ public class ReimbursementServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		//ObjectMapper om = new ObjectMapper();
-		//Furniture furniture = om.readValue(body, Furniture.class);
+		ObjectMapper om = new ObjectMapper();
+		String reimbursement = request.getReader().readLine();
+		log.debug(reimbursement);
+		
+		FakeReimbursement fake = om.readValue(reimbursement, FakeReimbursement.class);
+		Reimbursement reimburse = new Reimbursement();
+		reimburse.setId(fake.getId());
+		reimburse.setOwnerUserName(fake.getOwnerUserName());
+		reimburse.setType(fake.getType());
+		reimburse.setAmount(fake.getAmount());
+		reimburse.setStatus(fake.getStatus());
+		reimburse.setDateCreated(LocalDate.parse(fake.getDateCreated(), DateTimeFormatter.ofPattern("MM-dd-yyyy")));
+		reimburse.setDateLastModified(LocalDate.parse(fake.getDateLastModified(), DateTimeFormatter.ofPattern("MM-dd-yyyy")));
+		
+		log.debug(reimburse);
+		String attachments = request.getReader().readLine();
+		log.debug(attachments);
+		List<File> allAttachments = new ArrayList<File>();//om.readValue(attachments, List.class);
+		
+		//if (allAttachments == null) {
+			//allAttachments = new ArrayList<File>();
+		//}
+		
+		reimburseService.createReimbursement(reimburse, allAttachments);
 	}
 
 	public void setReimburseService(ReimbursementService reimburseService) {

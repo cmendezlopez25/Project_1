@@ -3,6 +3,8 @@ package com.revature.test.servlet;
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.when;
 
+import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.time.LocalDate;
@@ -38,12 +40,16 @@ public class ReimbursementServletTest {
 	private List<Reimbursement> reimburseListSupervisor;
 	private User user;
 	private ObjectMapper om;
+	private List<File> allAttachments;
 	
 	@Mock
 	private ReimbursementService reimburseService;
 	
 	@Mock
 	private PrintWriter writer;
+	
+	@Mock
+	private BufferedReader reader;
 	
 	@Mock
 	private HttpSession session;
@@ -68,6 +74,7 @@ public class ReimbursementServletTest {
 		reimburseListUser = new ArrayList<Reimbursement>();
 		reimburseListSupervisor = new ArrayList<Reimbursement>();
 		om = new ObjectMapper();
+		allAttachments = new ArrayList<File>();
 		
 		user = new User();
 		user.setUsername("testuser");
@@ -140,6 +147,19 @@ public class ReimbursementServletTest {
 			Mockito.verify(reimburseService).getReimbursementsByUser(user);
 			Mockito.verify(reimburseService).getReimbursementsForSupervisor(user);
 			Mockito.verify(writer).write(om.writeValueAsString(reimburseListSupervisor));
+		} catch (ServletException | IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@Test
+	public void doPostCreateReimbursement() {
+		Reimbursement reimburse = new Reimbursement();
+		try {
+			when(req.getReader()).thenReturn(reader);
+			when(reader.readLine()).thenReturn("");
+			reimburseServlet.doPost(req, resp);
+			Mockito.verify(reimburseService).createReimbursement(reimburse, allAttachments);
 		} catch (ServletException | IOException e) {
 			e.printStackTrace();
 		}
