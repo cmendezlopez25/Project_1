@@ -50,17 +50,20 @@ public class NotificationServlet extends HttpServlet {
 		// where all-notif is arr[0] and new-notif is arr[1]
 		List<List<Notification>> allNotification = new ArrayList<List<Notification>>();
 		User user = (User)session.getAttribute("user");
-		allNotification.add(notifService.getNotificationsByUser(user));
-		allNotification.add(notifService.getNewUnreadNotificationByUser(user));
+		List<Notification> allNotif = notifService.getNotificationsByUser(user);
+		List<Notification> newNotif = notifService.getNewNotificationByUser(user);
+		allNotification.add(allNotif);
+		allNotification.add(newNotif);
+		for (int i=0; i<newNotif.size(); i++) {
+			notifService.updateNewNotification(newNotif.get(i));
+		}
 		response.getWriter().write(om.writeValueAsString(allNotification));
-		
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		System.out.println("Notif doPost");
 		HttpSession session = request.getSession(false);
 		ObjectMapper om = new ObjectMapper();
 		String notifJSON = request.getReader().readLine();
