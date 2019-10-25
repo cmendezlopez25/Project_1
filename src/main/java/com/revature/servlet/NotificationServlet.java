@@ -48,11 +48,11 @@ public class NotificationServlet extends HttpServlet {
 		ObjectMapper om = new ObjectMapper();
 		// send announcement and notification in one array
 		// where all-notif is arr[0] and new-notif is arr[1]
-		List<List<Notification>> allReimbursements = new ArrayList<List<Notification>>();
+		List<List<Notification>> allNotification = new ArrayList<List<Notification>>();
 		User user = (User)session.getAttribute("user");
-		allReimbursements.add(notifService.getNotificationsByUser(user));
-		allReimbursements.add(notifService.getNewUnreadNotificationByUser(user));
-		response.getWriter().write(om.writeValueAsString(allReimbursements));
+		allNotification.add(notifService.getNotificationsByUser(user));
+		allNotification.add(notifService.getNewUnreadNotificationByUser(user));
+		response.getWriter().write(om.writeValueAsString(allNotification));
 		
 	}
 
@@ -60,6 +60,7 @@ public class NotificationServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		System.out.println("Notif doPost");
 		HttpSession session = request.getSession(false);
 		ObjectMapper om = new ObjectMapper();
 		String notifJSON = request.getReader().readLine();

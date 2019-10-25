@@ -7,7 +7,7 @@ class Reimbursement {
         this.status = status;
         this.dateCreated = dateCreated;
         this.dateLastModified = dateLastModified;
-        this.employeeName = employeeName;
+        this.ownerUserName = ownerUserName;
         this.message = message;
         this.passGrade = passGrade;
         this.dateEvent = dateEvent;
