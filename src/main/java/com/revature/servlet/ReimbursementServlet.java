@@ -86,6 +86,12 @@ public class ReimbursementServlet extends HttpServlet {
 		reimburseService.createReimbursement(reimburse, allAttachments);
 	}
 
+	@Override
+	protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		
+		super.doPut(req, resp);
+	}
+
 	public void setReimburseService(ReimbursementService reimburseService) {
 		this.reimburseService = reimburseService;
 	}

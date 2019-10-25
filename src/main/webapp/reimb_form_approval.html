@@ -24,7 +24,6 @@
             </div>
         </div>
         <div class="container p-t-20 p-l-100 p-r-100" style="border: solid black 1px;">
-            <form action="" method="POST" >
                 <div class="form-row">
                     <div class="form-group col-md-6">
                         <label for="inputEmail4">Expense Reimbursement ID: <span id="reimb-id">example id</span></label>
@@ -92,7 +91,7 @@
                     <button class="login100-form-btn m-l-10">
                         Request Info
                     </button>
-                    <button class="approval-form-btn right">
+                    <button class="approval-form-btn right" onclick="reject()">
                         Reject
                     </button>
                     <button class="approval-form-btn m-l-10">
@@ -100,7 +99,6 @@
                     </button>
                 </div>
 
-            </form>
         </div>
         
 
@@ -110,5 +108,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
     <script src='js/main.js'></script>
+    <script src="js/unit_ajax.js"></script>
+    <script src="js/manag_approval_ajax.js"></script>
 </body>
 </html>
