@@ -25,7 +25,7 @@ public class ReimbursementDAOImpl implements ReimbursementDAO {
 			e.printStackTrace();
 		}
 	}
-	private String createSql = "insert into reimbursement(type, amount, status, datecreated, datelastmodified, \"owner\", message, passgrade) values(?, ?, ?, ?, ?, ?, ?, ?)";
+	private String createSql = "insert into reimbursement(type, amount, status, datecreated, datelastmodified, \"owner\", message, passgrade, dateevent) values(?, ?, ?, ?, ?, ?, ?, ?, ?)";
 	private String readOneSql = "select * from reimbursement where id=?";
 	private String updateSql = "update reimbursement set amount=?, status=?, datelastmodified=? where id=?";
 	private String deleteSql = "delete from reimbursement where id=?";
@@ -49,6 +49,7 @@ public class ReimbursementDAOImpl implements ReimbursementDAO {
 			stmt.setString(6, reimburse.getOwnerUserName());
 			stmt.setString(7, reimburse.getMessage());
 			stmt.setInt(8, reimburse.getPassGrade());
+			stmt.setDate(9, Date.valueOf(reimburse.getDateEvent()));
 			stmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -77,6 +78,7 @@ public class ReimbursementDAOImpl implements ReimbursementDAO {
 				reimburse.setOwnerUserName(rs.getString(7));
 				reimburse.setMessage(rs.getString(8));
 				reimburse.setPassGrade(rs.getInt(9));
+				reimburse.setDateEvent(rs.getDate(10).toLocalDate());
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -141,6 +143,7 @@ public class ReimbursementDAOImpl implements ReimbursementDAO {
 				reimburse.setOwnerUserName(rs.getString(7));
 				reimburse.setMessage(rs.getString(8));
 				reimburse.setPassGrade(rs.getInt(9));
+				reimburse.setDateEvent(rs.getDate(10).toLocalDate());
 				reimburseList.add(reimburse);
 			}
 		} catch (SQLException e) {
@@ -171,6 +174,7 @@ public class ReimbursementDAOImpl implements ReimbursementDAO {
 				reimburse.setOwnerUserName(rs.getString(7));
 				reimburse.setMessage(rs.getString(8));
 				reimburse.setPassGrade(rs.getInt(9));
+				reimburse.setDateEvent(rs.getDate(10).toLocalDate());
 				reimburseList.add(reimburse);
 			}
 		} catch (SQLException e) {
@@ -201,6 +205,7 @@ public class ReimbursementDAOImpl implements ReimbursementDAO {
 				reimburse.setOwnerUserName(rs.getString(7));
 				reimburse.setMessage(rs.getString(8));
 				reimburse.setPassGrade(rs.getInt(9));
+				reimburse.setDateEvent(rs.getDate(10).toLocalDate());
 				reimburseList.add(reimburse);
 			}
 		} catch (SQLException e) {
