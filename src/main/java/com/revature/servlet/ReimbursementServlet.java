@@ -19,6 +19,7 @@ import javax.servlet.http.HttpSession;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.revature.pojo.Reimbursement;
+import com.revature.pojo.Reimbursement.ReimbursementStatus;
 import com.revature.pojo.User;
 import com.revature.service.ReimbursementService;
 import com.revature.service.ReimbursementServiceImpl;
@@ -84,6 +85,22 @@ public class ReimbursementServlet extends HttpServlet {
 		//}
 		
 		reimburseService.createReimbursement(reimburse, allAttachments);
+	}
+
+	@Override
+	protected void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String action = request.getReader().readLine();
+		int reimbId = Integer.parseInt(request.getReader().readLine());
+		Reimbursement reimb = reimburseService.getReimbursementById(reimbId);
+		if ("reject".equals(action)) {
+			reimb.setStatus(ReimbursementStatus.REJECTED);
+		}
+		else if ("approval".equals(action)) {
+			
+		}
+		// update reimb
+		reimburseService.updateReimbursement(reimb);
+
 	}
 
 	public void setReimburseService(ReimbursementService reimburseService) {

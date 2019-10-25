@@ -1,6 +1,7 @@
 package com.revature.servlet;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,6 +17,8 @@ import com.revature.pojo.Reimbursement;
 import com.revature.pojo.User;
 import com.revature.service.NotificationService;
 import com.revature.service.NotificationServiceImpl;
+import com.revature.service.UserService;
+import com.revature.service.UserServiceImpl;
 
 /**
  * Servlet implementation class NotificationServlet
@@ -23,6 +26,7 @@ import com.revature.service.NotificationServiceImpl;
 public class NotificationServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
     private NotificationService notifService = new NotificationServiceImpl();
+    private UserService userServe = new UserServiceImpl();
     /**
      * @see HttpServlet#HttpServlet()
      */
@@ -56,8 +60,18 @@ public class NotificationServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
+		HttpSession session = request.getSession(false);
+		ObjectMapper om = new ObjectMapper();
+		String notifJSON = request.getReader().readLine();
+		// msg reimbID status
+		Notification newNotif = om.readValue(notifJSON, Notification.class);
+		// created date
+		newNotif.setDateCreated(LocalDate.now());
+		// sender
+		newNotif.setSender(((User)(request.getSession().getAttribute("user"))));
+		// receiver
+		newNotif.setReceiver(userServe.getUserByReimbId(newNotif.getReimbursementId()));
+		notifService.createNotification(newNotif);
+		
 	}
-
 }
