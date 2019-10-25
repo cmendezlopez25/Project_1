@@ -6,6 +6,16 @@ function reject() {
     let notif = new Announcement();
     createRejectNotif(notif);
     updateRejectReimb(notif);
+    let xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState == 4) {
+            if (xhr.status == 200) {
+                window.location.replace("home");
+            }
+        }
+    }
+    xhr.open("GET", "login", true);
+    xhr.send();
 }
 
 function createRejectNotif(notif){
@@ -23,10 +33,8 @@ function createRejectNotif(notif){
             }
         }
     }
-
     xhrNotif.open("POST", "notification", true);
     xhrNotif.send(JSON.stringify(notif));
-       
 }
 
 function updateRejectReimb(notif) {

@@ -152,8 +152,8 @@ button {
 button.to-right {
   position: absolute;
   right: 5px;
-  bottom: 5px;
-  padding: 10px;
+  bottom: 0px;
+  padding: 5px 10px 5px 10px;
   font-size: 10px;
 }
 
