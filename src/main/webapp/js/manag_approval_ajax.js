@@ -19,6 +19,7 @@ function reject(){
                 console.log("notification created!");
             }
         }
+    }
         xhrReimb.onreadystatechange = function(){
         if (xhrReimb.readyState === 4){
             if(xhrReimb.status === 200){
