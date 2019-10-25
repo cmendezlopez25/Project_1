@@ -152,8 +152,8 @@ button {
 button.to-right {
   position: absolute;
   right: 5px;
-  bottom: 5px;
-  padding: 10px;
+  bottom: 0px;
+  padding: 5px 10px 5px 10px;
   font-size: 10px;
 }
 
@@ -611,6 +611,12 @@ label>span {
     padding-left: 15px;
     padding-right: 15px;
   }
+}
+
+a:hover {
+  color:white;
+  text-decoration: none;
+  border: #666666 2px solid;
 }
 
 a.page-link {
