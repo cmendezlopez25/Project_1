@@ -2,6 +2,19 @@ $(document).ready(function() {
     let createDate = document.getElementById("create-date");
     let currentDate = new Date();
     createDate.innerHTML = (currentDate.getMonth() +1) + "-" + currentDate.getDate() + "-" + currentDate.getFullYear();
+
+    // toggle grade input
+    $('#inputState').on('change', function() {
+        console.log($(this).val());
+        if ($(this).val() != 'SEMINARS' && $(this).val() != "")
+        {
+          $("#divGrade").show();
+        }
+        else
+        {
+          $("#divGrade").hide();
+        }
+    });
 });
 
 $('#attachment').change(updateList);
@@ -84,10 +97,10 @@ function inputValidation(reimbursement){
      }
  }
  
- function deleteAttachment(event) {
-     let btn = event.target;
-     let parent = btn.parentElement;
-     let index = parseInt(parent.id.split("_")[0], 10);
-     updateListItems.splice(index,1);
-     displayAttachments();
- }
+function deleteAttachment(event) {
+    let btn = event.target;
+    let parent = btn.parentElement;
+    let index = parseInt(parent.id.split("_")[0], 10);
+    updateListItems.splice(index,1);
+    displayAttachments();
+}

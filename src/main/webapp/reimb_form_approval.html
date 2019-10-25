@@ -10,8 +10,6 @@
     <link rel='stylesheet' type='text/css' media='screen' href='css/main.css'>
     <link rel='stylesheet' type='text/css' media='screen' href='css/util.css'>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script src="js/unit_ajax.js"></script>
-    <script src="js/reimb_form.js"></script>
 </head>
 <body>
     <script src="js/navlink.js"></script>
@@ -26,53 +24,61 @@
             </div>
         </div>
         <div class="container p-t-20 p-l-100 p-r-100" style="border: solid black 1px;">
-            <div>
+            <form action="" method="POST" >
                 <div class="form-row">
                     <div class="form-group col-md-6">
-                        <label for="inputPassword4">Create Date: <span id="create-date"></span></label>
+                        <label for="inputEmail4">Expense Reimbursement ID: <span id="reimb-id">example id</span></label>
+                    </div>
+                
+                    <div class="form-group col-md-6">
+                        <label for="inputPassword4">Create Date: <span id="create-date">example date</span></label>
                     </div>
                 </div>
                 <div class="form-row">
                     <div class="form-group col-md-4 p-l-0">
                         <label for="inputState" class="m-b-10">Type</label>
-                        <select id="inputState" class="form-control">
-                            <option selected value="">Choose...</option>
-                            <option value="UNIVERSITY_COURSES">University Course</option>
-                            <option value="SEMINARS">Seminars</option>
-                            <option value="CERTIFICATION_PREPARATION_CLASSES">Certification Preparation Classes</option>
-                            <option value="CERTIFICATION">Certification</option>
-                            <option value="TECHNICAL_TRAINING">Technical Training</option>
-                            <option value="OTHER">Other</option>
-                        </select>
-                    </div>
-                    <div id="divGrade" class="form-group col-md-4 p-l-0" style="display:none">
-                        <label for="inputState" class="m-b-10">Passing Grade</label>
-                        <input type="number" class="form-control" id="" placeholder="Enter your grade"/>
+                        <div class="container">
+                            <p id="reimb-type">sample request type</p>
+                        </div>
                     </div>
                 </div>
                 <div class="form-row">
                     <div class="form-group p-l-0">
                         <label for="comment" class="m-b-10">Requestor Comment</label>
-                        <textarea class="form-control" id="comment" cols="150" rows="5"> </textarea>
+                        <div class="container">
+                            <p id="reimb-reqCommt">sample requestor comment</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group p-l-0">
+                        <label for="reviewComment" class="m-b-10">Reviewer Comment</label>
+                        <textarea class="form-control" id="reviewComment" cols="150" rows="5"> </textarea>
                     </div>
                 </div>
                 <div class="row">
                     <div class="form-row col">
                         <div class="form-group p-l-0">
                             <label for="event-date" class="m-b-10">Event Date</label>
-                            <input type="date" class="form-control" id="event-date">
+                            <div class="container">
+                                <p id="reimb-eventdate">sample event date</p>
+                            </div>
                         </div>
                     </div>
                     <div class="form-row col">
                         <div class="form-group p-l-0">
                             <label for="amount" class="m-b-10">Amount</label>
-                            <input id="amount" type="number" class="form-control" min="0.01" step="0.01" max="1000" value="0.00" />
+                            <div class="container">
+                                <p id="reimb-amt">sample amount</p>
+                            </div>
                         </div>
                     </div>
                     <div class="form-row col">
                         <div class="form-group p-l-0">
                             <label for="attachment" class="m-b-10">Attachment</label>
-                            <input id="attachment" type="file" multiple/>
+                            <div class="container">
+                                <input id="attachment" type="file" multiple/>
+                            </div>
                             <div id="attachmentDiv">
                                 <ul id="attachmentList" class="list-group">
 
@@ -81,9 +87,16 @@
                         </div>
                     </div>
                 </div>
+                
                 <div class="container-login100-form-btn m-t-30 m-b-10">
-                    <button type="submit" class="login100-form-btn right" onclick="createReimbursement()">
-                        Submit
+                    <button class="login100-form-btn m-l-10">
+                        Request Info
+                    </button>
+                    <button class="approval-form-btn right">
+                        Reject
+                    </button>
+                    <button class="approval-form-btn m-l-10">
+                        Approval
                     </button>
                 </div>
 
