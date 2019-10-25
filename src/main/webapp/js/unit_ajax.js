@@ -1,6 +1,6 @@
 
 class Reimbursement {
-    constructor(id, type, amount, status, dateCreated, dateLastModified, employeeName, message, passGrade, dateEvent) {
+    constructor(id, type, amount, status, dateCreated, dateLastModified, ownerUserName, message, passGrade, dateEvent) {
         this.id = id;
         this.type = type;
         this.amount = amount;
