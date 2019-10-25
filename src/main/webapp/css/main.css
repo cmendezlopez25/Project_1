@@ -613,6 +613,12 @@ label>span {
   }
 }
 
+a:hover {
+  color:white;
+  text-decoration: none;
+  border: #666666 2px solid;
+}
+
 a.page-link {
   color: black;
 }
