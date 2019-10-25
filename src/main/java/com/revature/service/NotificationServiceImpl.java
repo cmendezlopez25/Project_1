@@ -24,10 +24,11 @@ public class NotificationServiceImpl implements NotificationService {
 	}
 
 	@Override
-	public boolean updateNotification(Notification notif) {
-		// TODO Auto-generated method stub
-		// dont
-		return false;
+	public boolean updateNewNotification(Notification notif) {
+		if (notif == null) {
+			return false;
+		}
+		return notifDao.updateNewNotification(notif);
 	}
 
 	@Override
@@ -53,7 +54,7 @@ public class NotificationServiceImpl implements NotificationService {
 	}
 
 	@Override
-	public List<Notification> getNewUnreadNotificationByUser(User user) throws NullPointerException {
+	public List<Notification> getNewNotificationByUser(User user) throws NullPointerException {
 		if (user == null) {
 			throw new NullPointerException();
 		}

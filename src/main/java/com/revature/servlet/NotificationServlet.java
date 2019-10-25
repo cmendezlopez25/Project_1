@@ -48,12 +48,16 @@ public class NotificationServlet extends HttpServlet {
 		ObjectMapper om = new ObjectMapper();
 		// send announcement and notification in one array
 		// where all-notif is arr[0] and new-notif is arr[1]
-		List<List<Notification>> allReimbursements = new ArrayList<List<Notification>>();
+		List<List<Notification>> allNotification = new ArrayList<List<Notification>>();
 		User user = (User)session.getAttribute("user");
-		allReimbursements.add(notifService.getNotificationsByUser(user));
-		allReimbursements.add(notifService.getNewUnreadNotificationByUser(user));
-		response.getWriter().write(om.writeValueAsString(allReimbursements));
-		
+		List<Notification> allNotif = notifService.getNotificationsByUser(user);
+		List<Notification> newNotif = notifService.getNewNotificationByUser(user);
+		allNotification.add(allNotif);
+		allNotification.add(newNotif);
+		for (int i=0; i<newNotif.size(); i++) {
+			notifService.updateNewNotification(newNotif.get(i));
+		}
+		response.getWriter().write(om.writeValueAsString(allNotification));
 	}
 
 	/**

@@ -70,9 +70,7 @@ function getAllReimbursement() {
     xhr.send();
 }
 
-function getReimbursementById(node) {
-    let id = node.children().first().html();
-    console.log(id);
+function getReimbursementById(id) {
     let xhr = new XMLHttpRequest();
     xhr.onreadystatechange = function() {
         if (xhr.readyState === 4) {

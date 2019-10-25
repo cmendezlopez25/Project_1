@@ -71,9 +71,26 @@ public class NotificationDAOImpl implements NotificationDAO {
 	}
 
 	@Override
-	public boolean updateNotification(Notification notif) {
-		// TODO Auto-generated method stub
-		// don't do
+	public boolean updateNewNotification(Notification notif) {
+		String query = "UPDATE notification\n" + 
+				"	SET status='UNREAD'\n" + 
+				"	WHERE msg = ? and sender = ? and receiver = ? and status = ?;";
+		PreparedStatement stmt = null;
+		try {
+			stmt = conn.prepareStatement(query);
+			stmt.setString(1, notif.getMsg());
+			stmt.setString(2, notif.getSender().getUsername());
+			stmt.setString(3, notif.getReceiver().getUsername());
+			stmt.setString(4, notif.getStatus().name());
+			
+			int row = stmt.executeUpdate();
+			if (row >= 1) {
+				return true;
+			}
+		} catch (SQLException e) {
+			System.out.println("Update NewNotif: Fail to update new Notification to Unread due to SQL Error");
+			e.printStackTrace();
+		}
 		return false;
 	}
 

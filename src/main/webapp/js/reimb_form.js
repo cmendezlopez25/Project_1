@@ -36,6 +36,7 @@ function createReimbursement(){
                 if(xhr.status === 200){
                     //TODO: Redirect back to home and create a notification to the assigned supervisor
                     console.log("Reimbursement created!");
+                    window.location.replace("home");
                 }
             }
         }
