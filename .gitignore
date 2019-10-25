@@ -46,4 +46,7 @@ hs_err_pid*
 #JDBC database.properties
 src/main/resources/database.properties
 
+#.project
+.project
+
 #This is how you add to your gitignore file

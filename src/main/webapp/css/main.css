@@ -41,8 +41,9 @@ body, html {
 
 /*---------------------------------------------*/
 a {
-	font-family: Raleway-Regular;
-	font-size: 14px;
+  font-family: Raleway-Regular;
+  font-weight: bold;
+	font-size: 18px;
 	line-height: 1.7;
 	color: #666666;
 	margin: 0px;
@@ -50,15 +51,27 @@ a {
 	-webkit-transition: all 0.4s;
   -o-transition: all 0.4s;
   -moz-transition: all 0.4s;
+  border: solid black 2px;
+  border-radius: 5px;
 }
 
 a:focus {
 	outline: none !important;
 }
 
-a:hover {
+a.nav-link:hover {
 	text-decoration: none;
-  color: #57b846;
+  color: rgb(255, 255, 255);
+  border: solid white 2px;
+}
+
+h3:hover {
+  text-decoration: none;
+  color: rgb(255, 255, 255);
+}
+
+tbody > tr:hover {
+  cursor: pointer;
 }
 
 /*---------------------------------------------*/
@@ -77,6 +90,15 @@ p {
 ul, li {
 	margin: 0px;
 	list-style-type: none;
+}
+
+.list-group-item {
+  position: relative;
+  display: block;
+  padding: 4px;
+  margin-bottom: -1px;
+  background-color: #fff;
+  border: 1px solid rgba(0,0,0,.125);
 }
 
 
@@ -127,6 +149,14 @@ button {
 	background: transparent;
 }
 
+button.to-right {
+  position: absolute;
+  right: 5px;
+  bottom: 5px;
+  padding: 10px;
+  font-size: 10px;
+}
+
 button:hover {
 	cursor: pointer;
 }
@@ -135,6 +165,13 @@ iframe {
 	border: none !important;
 }
 
+label {
+  font-weight:bold;
+}
+
+label>span {
+  font-weight:normal;
+}
 
 /*//////////////////////////////////////////////////////////////////
 [ Utility ]*/
@@ -160,6 +197,15 @@ iframe {
   line-height: 1.4;
 }
 
+.right {
+  margin-top: 2px;
+  margin-left: auto;
+  margin-right: 5px;
+}
+
+.mw-90 {
+  max-width: 90%;
+}
 
 /*//////////////////////////////////////////////////////////////////
 [ login ]*/
@@ -185,6 +231,26 @@ iframe {
   background-color: #ebebeb;
 }
 
+.no-padding {
+  padding: 0px;
+  margin-top: 5px;
+}
+
+.container-header {
+  width: 100%;  
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: left;
+  align-items: left;
+  margin: 0px;
+
+  background-color: black;
+}
+
 
 .wrap-login100 {
   width: 560px;
@@ -192,6 +258,25 @@ iframe {
   border-radius: 10px;
   position: relative;
 }
+
+.area-header {
+  color:#666666;
+  padding:5px;
+}
+
+.invalid-msg-hide {
+  display: none;
+}
+
+.invalid-msg-show {
+  display: inline-block;
+  font-family: Raleway-Medium;
+  font-size: 18px;
+  color: red;
+  padding:5px;
+  margin: 5px;
+}
+
 
 
 /*==================================================================
@@ -402,7 +487,7 @@ iframe {
   padding: 0 20px;
   min-width: 150px;
   height: 55px;
-  background-color: #333333;
+  background-color: black;
   border-radius: 27px;
 
   -webkit-transition: all 0.4s;
@@ -415,6 +500,36 @@ iframe {
   background-color: #5e5d5d;
 }
 
+.approval-form-btn {
+  font-family: Raleway-Bold;
+  font-size: 16px;
+  color: black;
+  line-height: 1.2;
+
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0 20px;
+  min-width: 150px;
+  height: 55px;
+  background-color: white;
+  border-radius: 27px;
+  border: 3px black solid;
+  -webkit-transition: all 0.4s;
+  -o-transition: all 0.4s;
+  -moz-transition: all 0.4s;
+  transition: all 0.4s;
+}
+
+.approval-form-btn:hover {
+  color: white;
+  border: 3px black solid;
+  background-color: #5e5d5d;
+}
 
 /*------------------------------------------------------------------
 [ Alert validate ]*/
@@ -496,4 +611,21 @@ iframe {
     padding-left: 15px;
     padding-right: 15px;
   }
+}
+
+a.page-link {
+  color: black;
+}
+a.page-link:hover {
+  color: #666666;
+}
+
+svg:hover {
+  color: white;
+}
+
+.unread {
+  font-weight: bold;
+  font-size: 18px;
+  background-color: white;
 }
