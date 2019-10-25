@@ -40,7 +40,7 @@ function displayApprovalReimbursement(appReimbList) {
         let dateCreated = r.dateCreated.monthValue + "/" + r.dateCreated.dayOfMonth + "/" + r.dateCreated.year;
         createCol.innerHTML = dateCreated;
         let modifyCol = document.createElement('td');
-        modifyCol.innerHTML = r.employeeName;
+        modifyCol.innerHTML = r.ownerUserName;
         tableRow.appendChild(idCol);
         tableRow.appendChild(typeCol);
         tableRow.appendChild(statusCol);
