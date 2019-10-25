@@ -72,6 +72,7 @@ public class ReimbursementServlet extends HttpServlet {
 		reimburse.setDateLastModified(LocalDate.parse(fake.getDateLastModified(), DateTimeFormatter.ofPattern("MM-dd-yyyy")));
 		reimburse.setMessage(fake.getMessage());
 		reimburse.setPassGrade(fake.getPassGrade());
+		reimburse.setDateEvent(LocalDate.parse(fake.getDateEvent(), DateTimeFormatter.ofPattern("MM-dd-yyyy")));
 		
 		log.debug(reimburse);
 		String attachments = request.getReader().readLine();

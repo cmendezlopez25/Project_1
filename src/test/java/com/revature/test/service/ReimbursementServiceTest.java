@@ -67,22 +67,22 @@ public class ReimbursementServiceTest {
 		realUser.setRole(User.Role.MANAGER);
 
 		Reimbursement reimburse = new Reimbursement(1, realUser.getUsername(), Reimbursement.ReimbursementType.CERTIFICATION, 200.00,
-				Reimbursement.ReimbursementStatus.PEND_DS, LocalDate.now(), LocalDate.now(), "Java OCA", 65);
+				Reimbursement.ReimbursementStatus.PEND_DS, LocalDate.now(), LocalDate.now(), "Java OCA", 65, LocalDate.now().plusDays(7));
 		reimburseList.add(reimburse);
 		reimburse = new Reimbursement(2, realUser.getUsername(), Reimbursement.ReimbursementType.CERTIFICATION_PREPARATION_CLASSES, 200.00,
-				Reimbursement.ReimbursementStatus.PEND_DS, LocalDate.now(), LocalDate.now(), "Almost Java class", 60);
+				Reimbursement.ReimbursementStatus.PEND_DS, LocalDate.now(), LocalDate.now(), "Almost Java class", 60, LocalDate.now().plusDays(7));
 		reimburseList.add(reimburse);
 		reimburse = new Reimbursement(3, realUser.getUsername(), Reimbursement.ReimbursementType.OTHER, 200.00,
-				Reimbursement.ReimbursementStatus.PEND_DS, LocalDate.now(), LocalDate.now(), "Something Useful", 0);
+				Reimbursement.ReimbursementStatus.PEND_DS, LocalDate.now(), LocalDate.now(), "Something Useful", 0, LocalDate.now().plusDays(7));
 		reimburseList.add(reimburse);
 		reimburse = new Reimbursement(4, realUser.getUsername(), Reimbursement.ReimbursementType.SEMINARS, 200.00,
-				Reimbursement.ReimbursementStatus.PEND_DS, LocalDate.now(), LocalDate.now(), "Angular Debacle", 0);
+				Reimbursement.ReimbursementStatus.PEND_DS, LocalDate.now(), LocalDate.now(), "Angular Debacle", 0, LocalDate.now().plusDays(7));
 		reimburseList.add(reimburse);
 		reimburse = new Reimbursement(5, realUser.getUsername(), Reimbursement.ReimbursementType.TECHNICAL_TRAINING, 200.00,
-				Reimbursement.ReimbursementStatus.PEND_DS, LocalDate.now(), LocalDate.now(), "Computer Hardware", 50);
+				Reimbursement.ReimbursementStatus.PEND_DS, LocalDate.now(), LocalDate.now(), "Computer Hardware", 50, LocalDate.now().plusDays(7));
 		reimburseList.add(reimburse);
 		reimburse = new Reimbursement(6, realUser.getUsername(), Reimbursement.ReimbursementType.UNIVERSITY_COURSES, 200.00,
-				Reimbursement.ReimbursementStatus.PEND_DS, LocalDate.now(), LocalDate.now(), "Science class", 80);
+				Reimbursement.ReimbursementStatus.PEND_DS, LocalDate.now(), LocalDate.now(), "Science class", 80, LocalDate.now().plusDays(7));
 		reimburseList.add(reimburse);
 
 		when(reimburseDao.createReimbursement(reimburseList.get(0))).thenReturn(false);
