@@ -17,8 +17,6 @@ $(document).ready(function() {
     });
 });
 
-$('#attachment').change(updateList);
-
 let updateListItems = [];
 
 function createReimbursement(){
