@@ -20,6 +20,7 @@ public class Reimbursement {
 	private LocalDate dateLastModified;
 	private String message;
 	private int passGrade;
+	private LocalDate dateEvent;
 
 	public int getId() {
 		return id;
@@ -95,23 +96,32 @@ public class Reimbursement {
 		this.passGrade = passGrade;
 	}
 
+	public LocalDate getDateEvent() {
+		return dateEvent;
+	}
+
+	public void setDateEvent(LocalDate dateEvent) {
+		this.dateEvent = dateEvent;
+	}
+
 	public Reimbursement() {
 		super();
 	}
 
 	public Reimbursement(int id, String ownerUserName, ReimbursementType type, double amount,
 			ReimbursementStatus status, LocalDate dateCreated, LocalDate dateLastModified, String message,
-			int passGrade) {
+			int passGrade, LocalDate dateEvent) {
 		super();
 		this.id = id;
 		this.ownerUserName = ownerUserName;
 		this.type = type;
-		this.amount = amount;
+		setAmount(amount);
 		this.status = status;
 		this.dateCreated = dateCreated;
 		this.dateLastModified = dateLastModified;
 		this.message = message;
 		this.passGrade = passGrade;
+		this.dateEvent = dateEvent;
 	}
 
 	@Override
@@ -122,6 +132,7 @@ public class Reimbursement {
 		temp = Double.doubleToLongBits(amount);
 		result = prime * result + (int) (temp ^ (temp >>> 32));
 		result = prime * result + ((dateCreated == null) ? 0 : dateCreated.hashCode());
+		result = prime * result + ((dateEvent == null) ? 0 : dateEvent.hashCode());
 		result = prime * result + ((dateLastModified == null) ? 0 : dateLastModified.hashCode());
 		result = prime * result + id;
 		result = prime * result + ((message == null) ? 0 : message.hashCode());
@@ -147,6 +158,11 @@ public class Reimbursement {
 			if (other.dateCreated != null)
 				return false;
 		} else if (!dateCreated.equals(other.dateCreated))
+			return false;
+		if (dateEvent == null) {
+			if (other.dateEvent != null)
+				return false;
+		} else if (!dateEvent.equals(other.dateEvent))
 			return false;
 		if (dateLastModified == null) {
 			if (other.dateLastModified != null)
@@ -178,6 +194,6 @@ public class Reimbursement {
 	public String toString() {
 		return "Reimbursement [id=" + id + ", ownerUserName=" + ownerUserName + ", type=" + type + ", amount=" + amount
 				+ ", status=" + status + ", dateCreated=" + dateCreated + ", dateLastModified=" + dateLastModified
-				+ ", message=" + message + ", passGrade=" + passGrade + "]";
+				+ ", message=" + message + ", passGrade=" + passGrade + ", dateEvent=" + dateEvent + "]";
 	}
 }
