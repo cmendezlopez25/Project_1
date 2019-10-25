@@ -43,7 +43,20 @@ public class ReimbursementServlet extends HttpServlet {
 		}
 
 		ObjectMapper om = new ObjectMapper();
-
+		
+		String name = request.getPathInfo();
+		System.out.println("getPathInfo: "+name);
+		if (name != null && !"".equals(name.substring(1))) {
+			int id = -1;
+			try {
+				id = Integer.parseInt(name.substring(1));
+			} catch(NumberFormatException e) {
+				return;
+			}
+			response.sendRedirect("reimb_form_approval.html");
+			session.setAttribute("reimbursement", reimburseService.getReimbursementById(id));
+		}
+		
 		List<List<Reimbursement>> allReimbursements = new ArrayList<List<Reimbursement>>();
 		User user = (User)session.getAttribute("user");
 		allReimbursements.add(reimburseService.getReimbursementsByUser(user));
@@ -99,6 +112,7 @@ public class ReimbursementServlet extends HttpServlet {
 			
 		}
 		// update reimb
+		System.out.println("reimb doPut");
 		reimburseService.updateReimbursement(reimb);
 
 	}

@@ -1,5 +1,6 @@
 $(document).ready(function() {
     getAllApprovalReimbursement()
+
 });
 
 function getAllApprovalReimbursement(){
@@ -22,11 +23,11 @@ function getAllApprovalReimbursement(){
 
 function displayApprovalReimbursement(appReimbList) {
     let list = document.getElementById("employ-reimb-list");
-    console.log(appReimbList);
     list.innerHTML = "";
-    console.log('displaying approval reimbursement table');
+    // console.log('displaying approval reimbursement table');
     for(r of appReimbList) {
         let tableRow = document.createElement("tr");
+        tableRow.addEventListener("click", showReimbDetail);
         tableRow.setAttribute("class", "approval-reimb-row");
         let idCol = document.createElement("th");
         idCol.innerHTML = r.id;
@@ -39,14 +40,34 @@ function displayApprovalReimbursement(appReimbList) {
         let createCol = document.createElement('td');
         let dateCreated = r.dateCreated.monthValue + "/" + r.dateCreated.dayOfMonth + "/" + r.dateCreated.year;
         createCol.innerHTML = dateCreated;
-        let modifyCol = document.createElement('td');
-        modifyCol.innerHTML = r.ownerUserName;
+        let empCol = document.createElement('td');
+        empCol.innerHTML = r.ownerUserName;
         tableRow.appendChild(idCol);
         tableRow.appendChild(typeCol);
         tableRow.appendChild(statusCol);
         tableRow.appendChild(amtCol);
         tableRow.appendChild(createCol);
-        tableRow.appendChild(modifyCol);
+        tableRow.appendChild(empCol);
         list.appendChild(tableRow);
     }
+}
+
+function showReimbDetail(event) {
+    let node = event.target.parentElement;
+    let id = node.children[0].innerHTML;
+    let xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState === 4) {
+            if (xhr.status === 200) {
+                window.location.replace("reimb_form_approval.html");
+                $("#search-result").html(xhr.responseText);
+            } else {
+                $("#search-result").html("Failed to retrieve furniture :(");
+            }
+        } else {
+            $("#search-result").html("Fetching Request");
+        }
+    }
+    xhr.open("GET", "reimbursement/"+id, true);
+    xhr.send();
 }
