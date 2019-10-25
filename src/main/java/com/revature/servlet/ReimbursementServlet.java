@@ -98,6 +98,7 @@ public class ReimbursementServlet extends HttpServlet {
 		//}
 		
 		reimburseService.createReimbursement(reimburse, allAttachments);
+		response.sendRedirect("home");
 	}
 
 	@Override
